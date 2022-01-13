@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 import { render } from "../../utils/test-utils";
 
 describe("StatusFilter", () => {
-  it("Should toggle item to true when first clicked", async () => {
+  it("should toggle item to true when first clicked", async () => {
     render(<StatusFilter />);
     const [todoCheckbox, doingCheckbox, doneCheckbox] =
       screen.getAllByRole("checkbox");
@@ -27,7 +27,7 @@ describe("StatusFilter", () => {
     await waitFor(() => expect(doneCheckbox.checked).toEqual(true));
   });
 
-  it("Should toggle item to false when doubled clicked", async () => {
+  it("should toggle item to false when doubled clicked", async () => {
     render(<StatusFilter />);
     const [todoCheckbox] = screen.getAllByRole("checkbox");
 

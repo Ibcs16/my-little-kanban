@@ -22,7 +22,7 @@ const mockedTodos = [
 ];
 
 describe("TodoList", () => {
-  it("Should show correct title for todo status", () => {
+  it("should show correct title for todo status", () => {
     render(<TodoList status="todo" />, {
       preloadedState: {
         todos: {
@@ -34,7 +34,7 @@ describe("TodoList", () => {
 
     expect(heading).toHaveTextContent(statusTitle.todo);
   });
-  it("Should show correct title for doing status", () => {
+  it("should show correct title for doing status", () => {
     render(<TodoList status="doing" />, {
       preloadedState: {
         todos: {
@@ -46,7 +46,7 @@ describe("TodoList", () => {
 
     expect(heading).toHaveTextContent(statusTitle.doing);
   });
-  it("Should show correct title for done status", () => {
+  it("should show correct title for done status", () => {
     render(<TodoList status="done" />, {
       preloadedState: {
         todos: {
@@ -58,7 +58,7 @@ describe("TodoList", () => {
 
     expect(heading).toHaveTextContent(statusTitle.done);
   });
-  it("Should show no title for incorrect status", () => {
+  it("should show no title for incorrect status", () => {
     render(<TodoList status="fake-status" />, {
       preloadedState: {
         todos: {
@@ -70,7 +70,7 @@ describe("TodoList", () => {
 
     expect(heading).toHaveTextContent("No status");
   });
-  it("Renders initial todos", () => {
+  it("should render initial todos", () => {
     render(<TodoList status="todo" />, {
       preloadedState: {
         todos: {
