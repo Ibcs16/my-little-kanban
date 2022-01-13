@@ -17,7 +17,12 @@ const SearchBox: React.FC = () => {
 
   return (
     <div>
-      <input id="search" name="search" onChange={handleOnSearch} />
+      <input
+        data-testid="search-box"
+        id="search"
+        name="search"
+        onChange={handleOnSearch}
+      />
     </div>
   );
 };
