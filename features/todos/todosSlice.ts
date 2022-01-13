@@ -29,31 +29,54 @@ const todosSlice = createSlice({
     searchedTerm: (state, action) => {
       state.search = action.payload;
     },
-    filterStatusChanged: (state, action) => {
-      state.filterStatus = action.payload;
+    checkedFilterStatus: (state, action) => {
+      state.filterStatus.push(action.payload);
+    },
+    uncheckedFilterStatus: (state, action) => {
+      state.filterStatus = state.filterStatus.filter(
+        status => status !== action.payload,
+      );
     },
   },
 });
 
-export const { todoAdded, searchedTerm, filterStatusChanged } =
-  todosSlice.actions;
+export const {
+  todoAdded,
+  searchedTerm,
+  checkedFilterStatus,
+  uncheckedFilterStatus,
+} = todosSlice.actions;
 
 export const selectAllTodos = (state: RootState) => {
-  const { items, search, filterStatus } = state.todos;
-  return items.filter(
-    ({ title, status }) =>
-      title.includes(search) || filterStatus.includes(status),
-  );
+  let { items, search, filterStatus } = state.todos;
+  if (filterStatus.length) {
+    items = items.filter(todo => filterStatus.includes(status));
+  }
+
+  if (search) {
+    items = items.filter(todo => todo.title.includes(search));
+  }
+
+  return items;
 };
 
+export const selectAllFilterStatus = (state: RootState) =>
+  state.todos.filterStatus;
+
 export const selectTodosByStatus = (state: RootState, status: string) => {
-  const { items, search, filterStatus } = state.todos;
-  return items
-    .filter(todo => todo.status === status)
-    .filter(
-      ({ title, status }) =>
-        title.includes(search) || filterStatus.includes(status),
-    );
+  let { items, search, filterStatus } = state.todos;
+
+  items = items.filter(todo => todo.status === status);
+
+  if (filterStatus.length) {
+    items = items.filter(todo => filterStatus.includes(status));
+  }
+
+  if (search) {
+    items = items.filter(todo => todo.title.includes(search));
+  }
+
+  return items;
 };
 
 export default todosSlice.reducer;
