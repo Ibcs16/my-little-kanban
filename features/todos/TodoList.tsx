@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { useAppSelector } from "../../app/hooks";
+import AddTodo from "./AddTodo";
 import { selectAllTodos, selectTodosByStatus } from "./todosSlice";
 
 interface TodoListProps {
@@ -30,6 +31,7 @@ const TodoList: React.FC<TodoListProps> = ({ status }) => {
             <li key={id}>{title}</li>
           ))}
         </ul>
+        <AddTodo status={status} />
       </div>
     </div>
   );

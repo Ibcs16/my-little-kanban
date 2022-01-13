@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 interface Todo {
@@ -19,7 +19,9 @@ const todosSlice = createSlice({
   initialState,
   name: "todos",
   reducers: {
-    todoAdded: (state, action) => {},
+    todoAdded: (state, action) => {
+      state.items.push(action.payload);
+    },
   },
 });
 

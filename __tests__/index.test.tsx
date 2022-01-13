@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import Home from "../pages/index";
 import { render } from "../utils/test-utils";
 
