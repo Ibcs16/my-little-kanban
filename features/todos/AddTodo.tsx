@@ -26,6 +26,7 @@ const AddTodo: React.FC<AddTodoProps> = ({ status }) => {
         name={`${status}-add`}
         id={`${status}-add-input`}
         onChange={onTitleChange}
+        value={title}
       />
       <button id={`${status}-add-button`} onClick={handleAddNewTodo}>
         Add new Todo
