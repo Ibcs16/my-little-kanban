@@ -14,6 +14,7 @@ const AddTodo: React.FC<AddTodoProps> = ({ status }) => {
   const handleAddNewTodo = () => {
     if (!title) return;
     dispatch(todoAdded({ id: nanoid(), title, status }));
+    setTitle("");
   };
 
   const onTitleChange = e => setTitle(e.target?.value);
