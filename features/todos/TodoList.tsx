@@ -10,7 +10,7 @@ interface StatusTitle {
   [key: string]: string;
 }
 
-const statusTitle: StatusTitle = {
+export const statusTitle: StatusTitle = {
   todo: "Todo 💭",
   doing: "Doing 🔥",
   done: "Done ✅",
@@ -24,7 +24,7 @@ const TodoList: React.FC<TodoListProps> = ({ status }) => {
   return (
     <div>
       <div>
-        <h3>{statusTitle[status]}</h3>
+        <h3>{statusTitle[status] || "No status"}</h3>
         <ul>
           {todos.map(({ id, title }) => (
             <li key={id}>{title}</li>

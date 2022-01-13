@@ -12,23 +12,7 @@ interface TodoSlice {
 }
 
 const initialState: TodoSlice = {
-  items: [
-    {
-      id: "3",
-      title: "Ship project",
-      status: "todo",
-    },
-    {
-      id: "2",
-      title: "Init my-little-kanban",
-      status: "doing",
-    },
-    {
-      id: "1",
-      title: "Study german",
-      status: "done",
-    },
-  ],
+  items: [],
 };
 
 const todosSlice = createSlice({

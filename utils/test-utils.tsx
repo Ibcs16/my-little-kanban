@@ -3,15 +3,19 @@ import React from "react";
 import { render as rtlRender } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
+import todosReducer from "../features/todos/todosSlice";
 // Import your own reducer
 
 function render(
   ui,
   {
     preloadedState,
-    store = configureStore({ reducer: {}, preloadedState }),
+    store = configureStore({
+      reducer: { todos: todosReducer },
+      preloadedState,
+    }),
     ...renderOptions
-  } = {}
+  } = {},
 ) {
   function Wrapper({ children }) {
     return <Provider store={store}>{children}</Provider>;
