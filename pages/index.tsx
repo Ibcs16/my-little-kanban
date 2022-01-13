@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import TodoList from "../features/todos/TodoList";
 
 const Home: NextPage = () => {
   return (
@@ -10,8 +11,18 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <main style={{ padding: "2em" }}>
         <h1>Welcome</h1>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <TodoList status="todo" />
+          <TodoList status="doing" />
+          <TodoList status="done" />
+        </div>
       </main>
     </div>
   );
