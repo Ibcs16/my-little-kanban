@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import SearchBox from "../features/todos/SearchBox";
 import TodoList from "../features/todos/TodoList";
 
 const Home: NextPage = () => {
@@ -13,6 +14,7 @@ const Home: NextPage = () => {
 
       <main style={{ padding: "2em" }}>
         <h1>Welcome</h1>
+        <SearchBox />
         <div
           style={{
             display: "flex",
