@@ -25,8 +25,8 @@ const StatusFilter: React.FC = () => {
         <label htmlFor={key} key={key}>
           <input
             type="checkbox"
-            name={`checkbox-${key}`}
-            id={`checkbox-${key}`}
+            name={`filter-checkbox-${key}`}
+            id={`filter-checkbox-${key}`}
             checked={filterStatus.includes(key)}
             onChange={e => onToggle(key, e)}
           />

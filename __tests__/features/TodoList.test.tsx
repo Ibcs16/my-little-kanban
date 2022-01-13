@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react";
-import store from "../../app/store";
+
 import TodoList, { statusTitle } from "../../features/todos/TodoList";
 import { render } from "../../utils/test-utils";
 

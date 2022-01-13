@@ -3,4 +3,4 @@ import AddTodo from "../../features/todos/AddTodo";
 
 import { render } from "../../utils/test-utils";
 
-describe("TodoList", () => {});
+describe("AddTodo", () => {});
