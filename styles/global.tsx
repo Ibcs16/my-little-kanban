@@ -17,6 +17,7 @@ const globalStyles = (theme: Theme) => css`
   body {
     background: ${theme.colors.bg};
     color: ${theme.colors.text};
+    font-family: Roboto, san-serif;
     -webkit-font-smoothing: antialiased !important;
   }
 

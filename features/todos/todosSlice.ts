@@ -1,10 +1,11 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { mockedTodos } from "../../utils/test-utils";
 
 export interface Todo {
   id: string;
   title: string;
-  status: "todo" | "doing" | "done";
+  status: "todo" | "doing" | "done" | string;
 }
 
 interface TodoSlice {
@@ -14,7 +15,7 @@ interface TodoSlice {
 }
 
 const initialState: TodoSlice = {
-  items: [],
+  items: mockedTodos,
   search: "",
   filterStatus: [],
 };
