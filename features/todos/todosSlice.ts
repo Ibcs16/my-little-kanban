@@ -57,13 +57,12 @@ export const {
 } = todosSlice.actions;
 
 export const selectAllTodos = (state: RootState) => {
-  let { items, search, filterStatus } = state.todos;
-  if (filterStatus.length) {
-    items = items.filter(todo => filterStatus.includes(status));
-  }
+  let { items, search } = state.todos;
 
   if (search) {
-    items = items.filter(todo => todo.title.includes(search));
+    items = items.filter(todo =>
+      todo.title.toLowerCase().includes(search.toLowerCase()),
+    );
   }
 
   return items;
@@ -81,11 +80,13 @@ export const selectTodosByStatus = (state: RootState, status: string) => {
   items = items.filter(todo => todo.status === status);
 
   if (filterStatus.length) {
-    items = items.filter(todo => filterStatus.includes(status));
+    items = items.filter(todo => filterStatus.includes(todo.status));
   }
 
   if (search) {
-    items = items.filter(todo => todo.title.includes(search));
+    items = items.filter(todo =>
+      todo.title.toLowerCase().includes(search.toLowerCase()),
+    );
   }
 
   return items;

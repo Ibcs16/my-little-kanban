@@ -10,7 +10,7 @@ const SearchBox: React.FC = () => {
 
   const delayedHandleChange = debounce(
     text => dispatch(searchedTerm(text)),
-    500,
+    300,
   );
 
   const handleOnSearch = e => delayedHandleChange(e.target.value);
@@ -22,6 +22,7 @@ const SearchBox: React.FC = () => {
         id="search"
         name="search"
         onChange={handleOnSearch}
+        placeholder="Search cards"
       />
     </div>
   );

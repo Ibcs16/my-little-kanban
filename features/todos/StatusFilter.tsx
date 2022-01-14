@@ -21,6 +21,7 @@ const StatusFilter: React.FC = () => {
   };
   return (
     <div>
+      <strong>Filters:</strong>
       {Object.entries(statusTitle).map(([key, status]) => (
         <label htmlFor={key} key={key}>
           <input
