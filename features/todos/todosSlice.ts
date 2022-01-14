@@ -26,6 +26,14 @@ const todosSlice = createSlice({
     todoAdded: (state, action) => {
       state.items.push(action.payload);
     },
+    todoUpdated: (state, action) => {
+      const { id, title, status } = action.payload;
+      let oldTodo = state.items.find(findTodo => findTodo.id === id);
+      if (oldTodo) {
+        oldTodo.status = status;
+        oldTodo.title = title;
+      }
+    },
     searchedTerm: (state, action) => {
       state.search = action.payload;
     },
@@ -45,6 +53,7 @@ export const {
   searchedTerm,
   checkedFilterStatus,
   uncheckedFilterStatus,
+  todoUpdated,
 } = todosSlice.actions;
 
 export const selectAllTodos = (state: RootState) => {
