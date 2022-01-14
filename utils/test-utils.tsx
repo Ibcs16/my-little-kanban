@@ -6,13 +6,37 @@ import { Provider } from "react-redux";
 import todosReducer from "../features/todos/todosSlice";
 // Import your own reducer
 
+export const mockedTodos = [
+  {
+    id: "3",
+    title: "Ship project",
+    status: "todo",
+  },
+  {
+    id: "2",
+    title: "Init my-little-kanban",
+    status: "doing",
+  },
+  {
+    id: "1",
+    title: "Study german",
+    status: "done",
+  },
+];
+
 function render(
   ui,
   {
     preloadedState,
     store = configureStore({
       reducer: { todos: todosReducer },
-      preloadedState,
+      preloadedState: {
+        todos: {
+          items: mockedTodos,
+          filterStatus: [],
+          search: "",
+        },
+      },
     }),
     ...renderOptions
   } = {},

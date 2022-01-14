@@ -1,25 +1,7 @@
 import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 import Home from "../pages/index";
-import { render } from "../utils/test-utils";
+import { render, mockedTodos } from "../utils/test-utils";
 import userEvent from "@testing-library/user-event";
-
-const mockedTodos = [
-  {
-    id: "3",
-    title: "Ship project",
-    status: "todo",
-  },
-  {
-    id: "2",
-    title: "Init my-little-kanban",
-    status: "doing",
-  },
-  {
-    id: "1",
-    title: "Study german",
-    status: "done",
-  },
-];
 
 describe("Home", () => {
   it("renders a heading", () => {
@@ -34,15 +16,7 @@ describe("Home", () => {
 
   describe("when user searches for term", () => {
     it("should only show items matching the text", async () => {
-      render(<Home />, {
-        preloadedState: {
-          todos: {
-            items: mockedTodos,
-            filterStatus: [],
-            search: "",
-          },
-        },
-      });
+      render(<Home />);
 
       // check for initial todos
       const todos = screen.getAllByRole("listitem");
@@ -64,15 +38,7 @@ describe("Home", () => {
   });
   describe("when user check filter boxes", () => {
     it("should only show items matching the filtered status", async () => {
-      render(<Home />, {
-        preloadedState: {
-          todos: {
-            items: mockedTodos,
-            filterStatus: [],
-            search: "",
-          },
-        },
-      });
+      render(<Home />);
 
       // check for initial todos
       const todos = screen.getAllByRole("listitem");

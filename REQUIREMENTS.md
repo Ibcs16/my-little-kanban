@@ -19,5 +19,6 @@
 
 ### Future
 
+- ASC/DESC Reorder
 - Dark/Light mode
 - Add blockchain integration

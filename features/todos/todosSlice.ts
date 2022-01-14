@@ -1,7 +1,7 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
-interface Todo {
+export interface Todo {
   id: string;
   title: string;
   status: "todo" | "doing" | "done";
@@ -62,6 +62,9 @@ export const selectAllTodos = (state: RootState) => {
 
 export const selectAllFilterStatus = (state: RootState) =>
   state.todos.filterStatus;
+
+export const selectTodoById = (state: RootState, id: string) =>
+  state.todos.items.find(todo => todo.id === id);
 
 export const selectTodosByStatus = (state: RootState, status: string) => {
   let { items, search, filterStatus } = state.todos;
