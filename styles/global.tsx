@@ -1,6 +1,6 @@
-import { css, Global } from "@emotion/react";
+import { css, Global, Theme, useTheme } from "@emotion/react";
 
-const globalStyles = css`
+const globalStyles = (theme: Theme) => css`
   * {
     margin: 0;
     padding: 0;
@@ -15,8 +15,8 @@ const globalStyles = css`
   }
 
   body {
-    background: #ecf1f8;
-    color: #333;
+    background: ${theme.colors.bg};
+    color: ${theme.colors.text};
     -webkit-font-smoothing: antialiased !important;
   }
 
@@ -29,6 +29,9 @@ const globalStyles = css`
   }
 `;
 
-const GlobalStyle = () => <Global styles={globalStyles} />;
+const GlobalStyle = () => {
+  const theme = useTheme();
+  return <Global styles={globalStyles(theme)} />;
+};
 
 export default GlobalStyle;
