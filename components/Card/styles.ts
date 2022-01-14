@@ -1,6 +1,11 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
-export const Container = styled.div`
+interface ContainerProps {
+  isDragging: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   padding: 16px;
   border-radius: 4px;
   background: white;
@@ -9,4 +14,19 @@ export const Container = styled.div`
   cursor: grab;
 
   font-weight: 500;
+
+  ${props =>
+    props.isDragging &&
+    css`
+      border: 2px dashed rgba(0, 0, 0, 0.2);
+
+      border-radius: 2px;
+      background: transparent;
+      box-shadow: none;
+      cursor: grabbing;
+
+      strong {
+        opacity: 0;
+      }
+    `}
 `;
