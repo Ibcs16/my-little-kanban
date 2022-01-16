@@ -1,17 +1,24 @@
 import React, { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { Todo } from "../../features/todos/todosSlice";
+import { useAppDispatch } from "../../app/hooks";
+import { Todo, todoDragged } from "../../features/todos/todosSlice";
 
 import { Container } from "./styles";
+import { DragCardItem, updateIndexAndStatusOnDrag } from "./utils/dragNDrop";
 
 interface CardProps {
   data: Todo;
+  index: number;
+  listIndex: number;
 }
 
-const Card: React.FC<CardProps> = ({ data }) => {
+const Card: React.FC<CardProps> = ({ data, index, listIndex }) => {
+  const dispatch = useAppDispatch();
+  const ref = useRef<HTMLDivElement>(null);
+
   const [{ isDragging }, dragRef] = useDrag({
     type: "CARD",
-    item: { type: "CARD", ...data },
+    item: { type: "CARD", id: data.id, index, listIndex },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
@@ -19,15 +26,21 @@ const Card: React.FC<CardProps> = ({ data }) => {
 
   const [, dropRef] = useDrop({
     accept: "CARD",
-    hover(item: Todo, monitor) {
-      // item is the one being dropped
-      // monitor gives extra info like
-      console.log(item.id);
-    },
+    drop: updateIndexAndStatusOnDrag(
+      data,
+      index,
+      listIndex,
+      ref,
+      ({ ...cbProps }) => {
+        dispatch(todoDragged({ ...cbProps }));
+      },
+    ),
   });
 
+  dragRef(dropRef(ref));
+
   return (
-    <Container ref={dragRef} isDragging={isDragging}>
+    <Container ref={ref} isDragging={isDragging}>
       <strong>{data.title}</strong>
     </Container>
   );

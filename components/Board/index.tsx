@@ -1,15 +1,18 @@
 import React from "react";
-import TodoList from "../../features/todos/TodoList";
+import { useAppSelector } from "../../app/hooks";
+
+import { selectAllTodoLists } from "../../features/todos/todosSlice";
 import List from "../List";
 
 import { Container } from "./styles";
 
 const Board: React.FC = () => {
+  const todoLists = useAppSelector(selectAllTodoLists);
   return (
     <Container>
-      <List status="todo" />
-      <List status="doing" />
-      <List status="done" />
+      {todoLists.map((todoList, index) => (
+        <List index={index} key={todoList.statusName} data={todoList} />
+      ))}
     </Container>
   );
 };

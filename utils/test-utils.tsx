@@ -8,19 +8,49 @@ import todosReducer from "../features/todos/todosSlice";
 
 export const mockedTodos = [
   {
-    id: "3",
-    title: "Ship project",
-    status: "todo",
+    id: "1",
+    title: "Todo 💭",
+    statusName: "todo",
+    cards: [
+      {
+        id: "3",
+        title: "Deploy project",
+        index: 0,
+        status: "todo",
+      },
+      {
+        id: "4",
+        title: "Send for review",
+        index: 1,
+        status: "todo",
+      },
+    ],
   },
   {
     id: "2",
-    title: "Init my-little-kanban",
-    status: "doing",
+    title: "Doing 🔥",
+    statusName: "doing",
+    cards: [
+      {
+        id: "1",
+        title: "Develop features",
+        index: 0,
+        status: "doing",
+      },
+    ],
   },
   {
-    id: "1",
-    title: "Study german",
-    status: "done",
+    id: "3",
+    title: "Done ✅",
+    statusName: "done",
+    cards: [
+      {
+        id: "2",
+        title: "Init project",
+        index: 0,
+        status: "done",
+      },
+    ],
   },
 ];
 
@@ -32,7 +62,7 @@ function render(
       reducer: { todos: todosReducer },
       preloadedState: {
         todos: {
-          items: mockedTodos,
+          lists: mockedTodos,
           filterStatus: [],
           search: "",
         },

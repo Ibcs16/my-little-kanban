@@ -5,10 +5,11 @@ import { Container } from "./styles";
 
 import React, { useMemo } from "react";
 import { useAppSelector } from "../../app/hooks";
-import { selectTodosByStatus } from "../../features/todos/todosSlice";
+import { selectTodosByStatus, TodoList } from "../../features/todos/todosSlice";
 
 interface TodoListProps {
-  status: string;
+  data: TodoList;
+  index: number;
 }
 
 interface StatusTitle {
@@ -21,15 +22,18 @@ export const statusTitle: StatusTitle = {
   done: "Done ✅",
 };
 
-const List: React.FC<TodoListProps> = ({ status }) => {
-  const todos = useAppSelector(state => selectTodosByStatus(state, status));
-  const hasButton = status === "todo";
+const List: React.FC<TodoListProps> = ({ data, index }) => {
+  const { statusName, title } = data;
+  const todos = useAppSelector(state => selectTodosByStatus(state, statusName));
 
-  if (!status) return null;
+  const hasButton = statusName === "todo";
+
+  if (!statusName) return null;
+
   return (
-    <Container done={status === "done"}>
+    <Container done={statusName === "done"}>
       <header>
-        <h2>{statusTitle[status] || "No status"}</h2>
+        <h2>{title || "No status"}</h2>
         {hasButton && (
           <button type="button">
             <MdAdd size={24} color="#fff" />
@@ -37,8 +41,8 @@ const List: React.FC<TodoListProps> = ({ status }) => {
         )}
       </header>
       <ul>
-        {todos.map(todo => (
-          <Card key={todo.id} data={todo} />
+        {todos.map((todo, cardIndex) => (
+          <Card key={todo.id} data={todo} index={cardIndex} listIndex={index} />
         ))}
       </ul>
     </Container>

@@ -5,35 +5,71 @@ import { mockedTodos } from "../../utils/test-utils";
 export interface Todo {
   id: string;
   title: string;
-  status: "todo" | "doing" | "done" | string;
+  status: string;
+  index: number;
+}
+
+export interface TodoList {
+  id: string;
+  title: string;
+  statusName: string;
+  cards: Todo[];
 }
 
 interface TodoSlice {
-  items: Todo[];
+  lists: TodoList[];
   search: string;
   filterStatus: string[];
 }
 
 const initialState: TodoSlice = {
-  items: mockedTodos,
+  lists: mockedTodos,
   search: "",
   filterStatus: [],
 };
+
+interface TodoDraggedActionPayload {
+  todoId: string;
+  fromIndex: number;
+  toIndex: number;
+  fromListIndex: number;
+  toListIndex: number;
+}
 
 const todosSlice = createSlice({
   initialState,
   name: "todos",
   reducers: {
     todoAdded: (state, action) => {
-      state.items.push(action.payload);
+      state.lists.push(action.payload);
     },
     todoUpdated: (state, action) => {
-      const { id, title, status } = action.payload;
-      let oldTodo = state.items.find(findTodo => findTodo.id === id);
-      if (oldTodo) {
-        oldTodo.status = status;
-        oldTodo.title = title;
-      }
+      const { title, status, id } = action.payload as Todo;
+      const oldTodo = selectTodoById({ todos: state }, id);
+      if (!oldTodo) return;
+      oldTodo.status = status;
+      oldTodo.title = title;
+    },
+    todoDragged: (state, action) => {
+      const { fromIndex, toIndex, fromListIndex, toListIndex } =
+        action.payload as TodoDraggedActionPayload;
+
+      const oldTodo = state.lists[fromListIndex].cards[fromIndex];
+
+      if (!oldTodo) return;
+
+      oldTodo.index = toIndex;
+      oldTodo.status = state.lists[toListIndex].statusName;
+
+      state.lists[fromListIndex].cards.splice(fromIndex, 1);
+      state.lists[toListIndex].cards.splice(toIndex, 0, oldTodo);
+
+      state.lists[fromListIndex].cards.forEach(
+        (todo, index) => (todo.index = index),
+      );
+      state.lists[toListIndex].cards.forEach(
+        (todo, index) => (todo.index = index),
+      );
     },
     searchedTerm: (state, action) => {
       state.search = action.payload;
@@ -55,42 +91,39 @@ export const {
   checkedFilterStatus,
   uncheckedFilterStatus,
   todoUpdated,
+  todoDragged,
 } = todosSlice.actions;
 
-export const selectAllTodos = (state: RootState) => {
-  let { items, search } = state.todos;
-
-  if (search) {
-    items = items.filter(todo =>
-      todo.title.toLowerCase().includes(search.toLowerCase()),
-    );
-  }
-
-  return items;
-};
+export const selectAllTodoLists = (state: RootState) => state.todos.lists;
 
 export const selectAllFilterStatus = (state: RootState) =>
   state.todos.filterStatus;
 
 export const selectTodoById = (state: RootState, id: string) =>
-  state.todos.items.find(todo => todo.id === id);
+  state.todos.lists
+    .reduce((acc, current) => [...acc, ...current.cards], [] as Todo[])
+    .find(todo => todo.id === id);
 
 export const selectTodosByStatus = (state: RootState, status: string) => {
-  let { items, search, filterStatus } = state.todos;
+  let { lists, search, filterStatus } = state.todos;
 
-  items = items.filter(todo => todo.status === status);
+  const list = lists.find(todoList => todoList.statusName === status) || {
+    cards: [] as Todo[],
+  };
+
+  let todos = list.cards;
 
   if (filterStatus.length) {
-    items = items.filter(todo => filterStatus.includes(todo.status));
+    todos = todos.filter(todo => filterStatus.includes(todo.status));
   }
 
   if (search) {
-    items = items.filter(todo =>
+    todos = todos.filter(todo =>
       todo.title.toLowerCase().includes(search.toLowerCase()),
     );
   }
 
-  return items;
+  return todos;
 };
 
 export default todosSlice.reducer;
