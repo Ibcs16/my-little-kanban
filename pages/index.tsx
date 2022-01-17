@@ -1,9 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Board from "../components/Board";
+import { Board } from "../components";
 import SearchBox from "../features/todos/SearchBox";
 import StatusFilter from "../features/todos/StatusFilter";
-import TodoList from "../features/todos/TodoList";
 
 const Home: NextPage = () => {
   return (

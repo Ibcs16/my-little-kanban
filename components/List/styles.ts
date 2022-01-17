@@ -2,15 +2,14 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 interface ContainerProps {
-  done: boolean;
-  cardIsOver: boolean;
+  done?: boolean;
+  isDraggingOver?: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
   padding: 0 15px;
   height: 100%;
   flex: 0 0 320px;
-  opacity: ${props => (props.done ? 0.6 : 1)};
 
   & + div {
     border-left: 1px solid ${({ theme }) => theme.colors.divider};
@@ -45,7 +44,7 @@ export const Container = styled.div<ContainerProps>`
     flex-direction: column;
     gap: 10px;
     ${props =>
-      props.cardIsOver &&
+      props.isDraggingOver &&
       css`
         background: yellow;
       `};
