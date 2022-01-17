@@ -4,6 +4,7 @@ import { DragDropContext, DragStart, DropResult } from "react-beautiful-dnd";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import {
+  selectAllFilterStatus,
   selectAllTodoLists,
   selectListsOrder,
   todoDragged,
@@ -14,7 +15,7 @@ import { Container } from "./styles";
 
 const Board: React.FC = () => {
   const lists = useAppSelector(selectAllTodoLists);
-
+  const filterStatus = useAppSelector(selectAllFilterStatus);
   const listsOrder = useAppSelector(selectListsOrder);
   const dispatch = useAppDispatch();
 

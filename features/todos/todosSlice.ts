@@ -61,7 +61,7 @@ const initialState: TodoSlice = {
     "4": {
       id: "4",
       title: "Design layout",
-      status: "doing",
+      status: "done",
     },
     "1": {
       id: "1",
@@ -182,7 +182,32 @@ export const {
 
 export const selectAllTodoLists = (state: RootState) => state.todos.lists;
 
-export const selectAllTodos = (state: RootState) => state.todos.items;
+export const selectAllTodos = (state: RootState) => {
+  const { items, filterStatus, search } = state.todos;
+
+  let todos = Object.values(items);
+
+  if (filterStatus.length) {
+    // check lists that are in the filter
+    const lists = Object.values(state.todos.lists).filter(li =>
+      filterStatus.includes(li.statusName),
+    );
+    const cardIds = lists
+      .map(({ cardIds }) => cardIds)
+      .reduce((acc, curr) => [...acc, ...curr], []);
+
+    todos = todos.filter(todo => cardIds.includes(todo.id));
+  }
+
+  if (search) {
+    todos = todos.filter(todo =>
+      todo.title.toLowerCase().includes(search.toLowerCase()),
+    );
+  }
+  return todos
+    .map(todo => ({ [todo.id]: todo }))
+    .reduce((arr, curr) => ({ ...arr, ...curr }), {});
+};
 
 export const selectAllFilterStatus = (state: RootState) =>
   state.todos.filterStatus;

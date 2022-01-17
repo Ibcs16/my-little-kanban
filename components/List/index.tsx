@@ -3,9 +3,13 @@ import Card, { ITEM_TYPE } from "../Card";
 
 import { Container } from "./styles";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { useAppSelector } from "../../app/hooks";
-import { selectAllTodos, TodoList } from "../../features/todos/todosSlice";
+import {
+  selectAllFilterStatus,
+  selectAllTodos,
+  TodoList,
+} from "../../features/todos/todosSlice";
 
 import { Droppable } from "react-beautiful-dnd";
 
@@ -16,6 +20,7 @@ interface TodoListProps {
 const List: React.FC<TodoListProps> = ({ data }) => {
   const { statusName, title } = data;
   const todos = useAppSelector(selectAllTodos);
+
   const hasButton = statusName === "todo";
 
   if (!statusName) return null;

@@ -14,6 +14,8 @@ const Home: NextPage = () => {
       </Head>
 
       <main style={{ padding: "2em" }}>
+        <SearchBox />
+        <StatusFilter />
         <Board />
       </main>
     </div>
