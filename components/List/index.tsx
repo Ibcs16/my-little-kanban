@@ -5,11 +5,7 @@ import { Container } from "./styles";
 
 import React from "react";
 import { useAppSelector } from "../../app/hooks";
-import {
-  selectAllTodos,
-  Todo,
-  TodoList,
-} from "../../features/todos/todosSlice";
+import { selectAllTodos, TodoList } from "../../features/todos/todosSlice";
 
 import { Droppable } from "react-beautiful-dnd";
 

@@ -10,7 +10,8 @@ const globalStyles = (theme: Theme) => css`
 
   html,
   body,
-  #root {
+  main {
+    width: 100%;
     height: 100%;
   }
 
