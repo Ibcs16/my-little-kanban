@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppDispatch } from "../../app/hooks";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { searchedTerm } from "./todosSlice";
 
 // import { Container } from './styles';
