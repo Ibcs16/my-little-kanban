@@ -8,7 +8,8 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, title, status }) => {
   const dispatch = useAppDispatch();
   const [editedTitle, setEditedTitle] = useState(title);
   const [isEditing, setIsEditing] = useState(false);
-  const handleOnChange = e => setEditedTitle(e.target.value);
+  const handleOnChange = (e: { target: HTMLInputElement }) =>
+    setEditedTitle(e.target.value);
 
   const handleSaveEdition = useCallback(() => {
     dispatch(todoUpdated({ id, title: editedTitle, status }));

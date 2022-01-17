@@ -12,7 +12,7 @@ import {
 const StatusFilter: React.FC = () => {
   const dispatch = useAppDispatch();
   const filterStatus = useAppSelector(selectAllFilterStatus);
-  const onToggle = (key: string, e) => {
+  const onToggle = (key: string, e: { target: HTMLInputElement }) => {
     if (e.target.checked) {
       dispatch(checkedFilterStatus(key));
     } else {

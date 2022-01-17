@@ -13,7 +13,8 @@ const SearchBox: React.FC = () => {
     300,
   );
 
-  const handleOnSearch = e => delayedHandleChange(e.target.value);
+  const handleOnSearch = (e: { target: HTMLInputElement }) =>
+    delayedHandleChange(e.target.value);
 
   return (
     <div>

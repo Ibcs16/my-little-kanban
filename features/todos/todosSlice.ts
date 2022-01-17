@@ -1,6 +1,10 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { mockedTodoLists, mockedTodos } from "../../utils/test-utils";
+import {
+  mockedTodoLists,
+  mockedTodos,
+  mockedTodosListsOrder,
+} from "../../utils/test-utils";
 
 export const todoLists = [
   {
@@ -47,49 +51,9 @@ interface TodoSlice {
 }
 
 const initialState: TodoSlice = {
-  items: {
-    "2": {
-      id: "2",
-      title: "Finish project",
-      status: "todo",
-    },
-    "3": {
-      id: "3",
-      title: "Develop project",
-      status: "doing",
-    },
-    "4": {
-      id: "4",
-      title: "Design layout",
-      status: "done",
-    },
-    "1": {
-      id: "1",
-      title: "Init project",
-      status: "done",
-    },
-  },
-  lists: {
-    "1": {
-      id: "1",
-      title: "To do 💭",
-      statusName: "todo",
-      cardIds: ["2"],
-    },
-    "2": {
-      id: "2",
-      title: "Doing 🔥",
-      statusName: "doing",
-      cardIds: ["3"],
-    },
-    "3": {
-      id: "3",
-      title: "Done ✅",
-      statusName: "done",
-      cardIds: ["1", "4"],
-    },
-  },
-  listsOrder: ["1", "2", "3"],
+  items: mockedTodos,
+  lists: mockedTodoLists,
+  listsOrder: mockedTodosListsOrder,
   search: "",
   filterStatus: [],
 };

@@ -17,7 +17,8 @@ const AddTodo: React.FC<AddTodoProps> = ({ status }) => {
     setTitle("");
   };
 
-  const onTitleChange = e => setTitle(e.target?.value);
+  const onTitleChange = (e: { target: HTMLInputElement }) =>
+    setTitle(e.target?.value);
 
   return (
     <div>

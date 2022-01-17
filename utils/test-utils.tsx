@@ -4,74 +4,78 @@ import { render as rtlRender } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import todosReducer from "../features/todos/todosSlice";
+import { AppStore, RootState } from "../app/store";
 // Import your own reducer
 
-export const mockedTodos = [
-  {
+export const mockedTodos = {
+  "2": {
+    id: "2",
+    title: "Finish project",
+    status: "todo",
+  },
+  "3": {
     id: "3",
-    title: "Deploy project",
-    index: 0,
-    status: "todo",
-  },
-  {
-    id: "4",
-    title: "Send for review",
-    index: 1,
-    status: "todo",
-  },
-  {
-    id: "1",
-    title: "Develop features",
-    index: 0,
+    title: "Develop project",
     status: "doing",
   },
-
-  {
-    id: "2",
-    title: "Init project",
-    index: 0,
+  "4": {
+    id: "4",
+    title: "Design layout",
     status: "done",
   },
-];
-
-export const mockedTodoLists = [
-  {
+  "1": {
     id: "1",
-    title: "Todo 💭",
-    statusName: "todo",
+    title: "Init project",
+    status: "done",
   },
-  {
+};
+
+export const mockedTodoLists = {
+  "1": {
+    id: "1",
+    title: "To do 💭",
+    statusName: "todo",
+    cardIds: ["2"],
+  },
+  "2": {
     id: "2",
     title: "Doing 🔥",
     statusName: "doing",
+    cardIds: ["3"],
   },
-  {
+  "3": {
     id: "3",
     title: "Done ✅",
     statusName: "done",
+    cardIds: ["1", "4"],
   },
-];
+};
+
+export const mockedTodosListsOrder = ["1", "2", "3"];
 
 function render(
-  ui,
+  ui: React.ReactElement,
   {
     preloadedState,
     store = configureStore({
       reducer: { todos: todosReducer },
       preloadedState: {
         todos: {
-          lists: mockedTodos,
+          items: mockedTodos,
+          lists: mockedTodoLists,
+          listsOrder: mockedTodosListsOrder,
           filterStatus: [],
           search: "",
         },
       },
     }),
     ...renderOptions
-  } = {},
+  } = {} as { preloadedState: RootState; store: AppStore },
 ) {
-  function Wrapper({ children }) {
-    return <Provider store={store}>{children}</Provider>;
-  }
+  const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <Provider store={store}>{children}</Provider>
+  );
+
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
