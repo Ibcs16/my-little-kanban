@@ -1,11 +1,12 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 
 interface ContainerProps {
   isDragging: boolean;
 }
 
-export const Container = styled.div<ContainerProps>`
+export const Container = styled(motion.div)<ContainerProps>`
   padding: 16px;
   border-radius: 4px;
   background: white;

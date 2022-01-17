@@ -1,6 +1,24 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { mockedTodos } from "../../utils/test-utils";
+import { mockedTodoLists, mockedTodos } from "../../utils/test-utils";
+
+export const todoLists = [
+  {
+    id: "1",
+    title: "Todo 💭",
+    statusName: "todo",
+  },
+  {
+    id: "2",
+    title: "Doing 🔥",
+    statusName: "doing",
+  },
+  {
+    id: "3",
+    title: "Done ✅",
+    statusName: "done",
+  },
+];
 
 export interface Todo {
   id: string;
@@ -9,21 +27,22 @@ export interface Todo {
   index: number;
 }
 
-export interface TodoList {
+export interface TodoStatus {
   id: string;
   title: string;
   statusName: string;
-  cards: Todo[];
 }
 
 interface TodoSlice {
-  lists: TodoList[];
+  items: Todo[];
+  statuses: TodoStatus[];
   search: string;
   filterStatus: string[];
 }
 
 const initialState: TodoSlice = {
-  lists: mockedTodos,
+  items: mockedTodos,
+  statuses: todoLists,
   search: "",
   filterStatus: [],
 };
@@ -41,7 +60,7 @@ const todosSlice = createSlice({
   name: "todos",
   reducers: {
     todoAdded: (state, action) => {
-      state.lists.push(action.payload);
+      state.items.push(action.payload);
     },
     todoUpdated: (state, action) => {
       const { title, status, id } = action.payload as Todo;
@@ -51,25 +70,16 @@ const todosSlice = createSlice({
       oldTodo.title = title;
     },
     todoDragged: (state, action) => {
-      const { fromIndex, toIndex, fromListIndex, toListIndex } =
-        action.payload as TodoDraggedActionPayload;
-
-      const oldTodo = state.lists[fromListIndex].cards[fromIndex];
-
-      if (!oldTodo) return;
-
-      oldTodo.index = toIndex;
-      oldTodo.status = state.lists[toListIndex].statusName;
-
-      state.lists[fromListIndex].cards.splice(fromIndex, 1);
-      state.lists[toListIndex].cards.splice(toIndex, 0, oldTodo);
-
-      state.lists[fromListIndex].cards.forEach(
-        (todo, index) => (todo.index = index),
-      );
-      state.lists[toListIndex].cards.forEach(
-        (todo, index) => (todo.index = index),
-      );
+      const { draggedIndex, targetIndex } = action.payload;
+      const todo = state.items[draggedIndex];
+      state.items = state.items.filter((_, index) => index !== draggedIndex);
+      state.items.splice(targetIndex, 0, todo);
+    },
+    todoStatusChanged: (state, action) => {
+      const { status, todo } = action.payload;
+      state.items = state.items
+        .filter(td => td.id !== todo.id)
+        .concat({ ...todo, status });
     },
     searchedTerm: (state, action) => {
       state.search = action.payload;
@@ -92,26 +102,21 @@ export const {
   uncheckedFilterStatus,
   todoUpdated,
   todoDragged,
+  todoStatusChanged,
 } = todosSlice.actions;
 
-export const selectAllTodoLists = (state: RootState) => state.todos.lists;
+export const selectAllTodoLists = (state: RootState) => state.todos.statuses;
 
 export const selectAllFilterStatus = (state: RootState) =>
   state.todos.filterStatus;
 
 export const selectTodoById = (state: RootState, id: string) =>
-  state.todos.lists
-    .reduce((acc, current) => [...acc, ...current.cards], [] as Todo[])
-    .find(todo => todo.id === id);
+  state.todos.items.find(todo => todo.id === id);
 
 export const selectTodosByStatus = (state: RootState, status: string) => {
-  let { lists, search, filterStatus } = state.todos;
+  let { items, search, filterStatus } = state.todos;
 
-  const list = lists.find(todoList => todoList.statusName === status) || {
-    cards: [] as Todo[],
-  };
-
-  let todos = list.cards;
+  let todos = items.filter(todoList => todoList.status === status);
 
   if (filterStatus.length) {
     todos = todos.filter(todo => filterStatus.includes(todo.status));

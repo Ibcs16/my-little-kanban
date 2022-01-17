@@ -1,7 +1,9 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 interface ContainerProps {
   done: boolean;
+  cardIsOver: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -37,9 +39,15 @@ export const Container = styled.div<ContainerProps>`
   }
 
   ul {
+    height: 100%;
     margin-top: 30px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    ${props =>
+      props.cardIsOver &&
+      css`
+        background: yellow;
+      `};
   }
 `;

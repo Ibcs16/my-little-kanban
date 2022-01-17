@@ -8,49 +8,47 @@ import todosReducer from "../features/todos/todosSlice";
 
 export const mockedTodos = [
   {
+    id: "3",
+    title: "Deploy project",
+    index: 0,
+    status: "todo",
+  },
+  {
+    id: "4",
+    title: "Send for review",
+    index: 1,
+    status: "todo",
+  },
+  {
+    id: "1",
+    title: "Develop features",
+    index: 0,
+    status: "doing",
+  },
+
+  {
+    id: "2",
+    title: "Init project",
+    index: 0,
+    status: "done",
+  },
+];
+
+export const mockedTodoLists = [
+  {
     id: "1",
     title: "Todo 💭",
     statusName: "todo",
-    cards: [
-      {
-        id: "3",
-        title: "Deploy project",
-        index: 0,
-        status: "todo",
-      },
-      {
-        id: "4",
-        title: "Send for review",
-        index: 1,
-        status: "todo",
-      },
-    ],
   },
   {
     id: "2",
     title: "Doing 🔥",
     statusName: "doing",
-    cards: [
-      {
-        id: "1",
-        title: "Develop features",
-        index: 0,
-        status: "doing",
-      },
-    ],
   },
   {
     id: "3",
     title: "Done ✅",
     statusName: "done",
-    cards: [
-      {
-        id: "2",
-        title: "Init project",
-        index: 0,
-        status: "done",
-      },
-    ],
   },
 ];
 
