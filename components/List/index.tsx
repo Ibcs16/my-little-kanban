@@ -3,15 +3,12 @@ import Card, { ITEM_TYPE } from "../Card";
 
 import { Container } from "./styles";
 
-import React, { useMemo } from "react";
+import React from "react";
 import { useAppSelector } from "../../app/hooks";
-import {
-  selectAllFilterStatus,
-  selectAllTodos,
-  TodoList,
-} from "../../features/todos/todosSlice";
+import { selectAllTodos } from "../../features/todos/todosSlice";
 
 import { Droppable } from "react-beautiful-dnd";
+import { TodoList } from "../../features/todos/models/todo";
 
 interface TodoListProps {
   data: TodoList;
@@ -44,7 +41,7 @@ const List: React.FC<TodoListProps> = ({ data }) => {
           </header>
           <ul>
             {data.cardIds
-              .map(id => todos[id])
+              ?.map(id => todos[id])
               .map((todo, cardIndex) =>
                 todo ? (
                   <Card key={todo.id} data={todo} index={cardIndex} />

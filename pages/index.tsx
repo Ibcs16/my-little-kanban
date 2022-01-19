@@ -1,10 +1,17 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useEffect } from "react";
+import { useAppDispatch } from "../app/hooks";
 import { Board } from "../components";
 import SearchBox from "../features/todos/SearchBox";
 import StatusFilter from "../features/todos/StatusFilter";
+import { fetchTodos } from "../features/todos/todosSlice";
 
 const Home: NextPage = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
   return (
     <div>
       <Head>

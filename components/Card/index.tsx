@@ -1,7 +1,7 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
-import { Todo } from "../../features/todos/todosSlice";
+import { Todo } from "../../features/todos/models/todo";
 
 import { Container } from "./styles";
 
