@@ -17,7 +17,7 @@ export const Container = styled.div<ContainerProps>`
 
   font-weight: 500;
 
-  ${({ theme }) => theme.typograhy.md.paragraphMdBold}
+  ${({ theme }) => theme.typography.md.paragraphMdBold}
 
   color: ${({ theme }) => theme.colors.textSecondary};
 
