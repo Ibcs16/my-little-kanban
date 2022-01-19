@@ -12,13 +12,12 @@ export const theme = {
     bg: "white",
     bg01: "#F8F8F7",
     bg02: "#E5E5E5",
-
     divider: "rgba(0, 0, 0, 0.05)",
   },
   shadows: {
     sm: "0px 2px 4px rgba(0, 0, 0, 0.05)",
   },
-  typograhy: {
+  typography: {
     md: {
       headingLg: css`
         font-family: Roboto;
@@ -63,7 +62,10 @@ export const theme = {
         line-height: 19px;
       `,
     },
+    sm: {},
   },
 };
 
 export type ThemeType = typeof theme;
+
+// export type ThemeType = typeof theme;
