@@ -21,7 +21,7 @@ export const Container = styled.div<ContainerProps>`
     height: 42px;
 
     h2 {
-      ${props => props.theme.typograhy.md.headingMd}
+      ${props => props.theme.typography.md.headingMd}
     }
 
     .titleWrapper {
@@ -34,7 +34,7 @@ export const Container = styled.div<ContainerProps>`
         background: ${props => props.theme.colors.bg02};
         padding: 5px;
         border-radius: 2px;
-        ${props => props.theme.typograhy.md.extra}
+        ${props => props.theme.typography.md.extra}
       }
     }
 

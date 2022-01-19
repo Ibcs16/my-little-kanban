@@ -31,6 +31,9 @@ const List: React.FC<TodoListProps> = ({ data }) => {
           done={statusName === "done"}
           {...provided.droppableProps}
           {...snapshot}
+          isDraggingOver={
+            !snapshot.draggingFromThisWith && !!snapshot.draggingOverWith
+          }
         >
           <header>
             <div className="titleWrapper">
