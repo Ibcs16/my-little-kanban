@@ -7,13 +7,12 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
-  padding: 0 15px;
+  padding: 8px 16px;
   height: 100%;
   flex: 0 0 320px;
-
-  & + div {
-    border-left: 1px solid ${({ theme }) => theme.colors.divider};
-  }
+  background: ${({ theme }) => theme.colors.bg01};
+  border: 2px solid ${props => props.theme.colors.bg01};
+  border-radius: 10px;
 
   header {
     display: flex;
@@ -22,31 +21,42 @@ export const Container = styled.div<ContainerProps>`
     height: 42px;
 
     h2 {
-      font-weight: 500;
-      font-size: 16px;
-      padding: 0 10px;
+      ${props => props.theme.typograhy.md.headingMd}
+    }
+
+    .titleWrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .tasksCount {
+        color: ${props => props.theme.colors.textSecondary};
+        background: ${props => props.theme.colors.bg02};
+        padding: 5px;
+        border-radius: 2px;
+        ${props => props.theme.typograhy.md.extra}
+      }
     }
 
     button {
-      height: 42px;
-      width: 42px;
-      border-radius: 18px;
-      background: ${({ theme }) => theme.colors.secondary};
-      border: 0;
       cursor: pointer;
+      background: transparent;
+      border: none;
+      color: ${props => props.theme.colors.textSecondary};
     }
   }
 
   ul {
     height: 100%;
-    margin-top: 30px;
+    margin-top: 16px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    ${props =>
-      props.isDraggingOver &&
-      css`
-        background: yellow;
-      `};
   }
+
+  ${props =>
+    props.isDraggingOver &&
+    css`
+      border: 2px dashed ${props.theme.colors.primary};
+    `};
 `;

@@ -9,6 +9,7 @@ import { selectAllTodos } from "../../features/todos/todosSlice";
 
 import { Droppable } from "react-beautiful-dnd";
 import { TodoList } from "../../features/todos/models/todo";
+import Icon from "../Icon";
 
 interface TodoListProps {
   data: TodoList;
@@ -32,12 +33,17 @@ const List: React.FC<TodoListProps> = ({ data }) => {
           {...snapshot}
         >
           <header>
-            <h2>{title || "No status"}</h2>
-            {hasButton && (
-              <button type="button">
-                <MdAdd size={24} color="#fff" />
-              </button>
-            )}
+            <div className="titleWrapper">
+              <h2>{title || "No status"}</h2>
+
+              {data.cardIds.length > 0 && (
+                <span className="tasksCount">{data.cardIds.length}</span>
+              )}
+            </div>
+
+            <button type="button">
+              <Icon size={18} name="plus" />
+            </button>
           </header>
           <ul>
             {data.cardIds

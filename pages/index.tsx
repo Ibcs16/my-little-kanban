@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useEffect } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { Board } from "../components";
-import SearchBox from "../features/todos/SearchBox";
+import SearchBox from "../features/todos/Searchbox";
 import StatusFilter from "../features/todos/StatusFilter";
 import { fetchTodos } from "../features/todos/todosSlice";
 
@@ -13,14 +13,14 @@ const Home: NextPage = () => {
     dispatch(fetchTodos());
   }, [dispatch]);
   return (
-    <div>
+    <div id="content">
       <Head>
         <title>My Little Kanban</title>
         <meta name="description" content="A simple personal kanban" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main style={{ padding: "2em" }}>
+      <main>
         <SearchBox />
         <StatusFilter />
         <Board />
