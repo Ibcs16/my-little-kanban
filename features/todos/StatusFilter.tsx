@@ -4,6 +4,7 @@ import { statusTitle } from "./TodoList";
 import {
   checkedFilterStatus,
   selectAllFilterStatus,
+  selectAllTodoLists,
   uncheckedFilterStatus,
 } from "./todosSlice";
 
@@ -11,6 +12,7 @@ import {
 
 const StatusFilter: React.FC = () => {
   const dispatch = useAppDispatch();
+  const lists = useAppSelector(selectAllTodoLists);
   const filterStatus = useAppSelector(selectAllFilterStatus);
   const onToggle = (key: string, e: { target: HTMLInputElement }) => {
     if (e.target.checked) {
@@ -22,18 +24,20 @@ const StatusFilter: React.FC = () => {
   return (
     <div>
       <strong>Filters:</strong>
-      {Object.entries(statusTitle).map(([key, status]) => (
-        <label htmlFor={key} key={key}>
-          <input
-            type="checkbox"
-            name={`filter-checkbox-${key}`}
-            id={`filter-checkbox-${key}`}
-            checked={filterStatus.includes(key)}
-            onChange={e => onToggle(key, e)}
-          />
-          {status}
-        </label>
-      ))}
+      {Object.values(lists)
+        .sort((a, b) => Number(a.order) - Number(b.order))
+        .map(list => (
+          <label htmlFor={list.statusName} key={list.statusName}>
+            <input
+              type="checkbox"
+              name={`filter-checkbox-${list.statusName}`}
+              id={`filter-checkbox-${list.statusName}`}
+              checked={filterStatus.includes(list.statusName)}
+              onChange={e => onToggle(list.statusName, e)}
+            />
+            {list.title}
+          </label>
+        ))}
     </div>
   );
 };

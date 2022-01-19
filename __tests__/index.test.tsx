@@ -55,7 +55,7 @@ describe("Home", () => {
 
       // check if remaining item is indeed the one we filtered for
       const [remainingTodo] = screen.getAllByRole("listitem");
-      expect(remainingTodo).toHaveTextContent(mockedTodos[0].title);
+      expect(remainingTodo).toHaveTextContent(mockedTodos["1"].title);
     });
   });
 });

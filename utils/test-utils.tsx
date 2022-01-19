@@ -5,6 +5,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import todosReducer from "../features/todos/todosSlice";
 import { AppStore, RootState } from "../app/store";
+import { ThemeProvider } from "@emotion/react";
+import { theme } from "../styles/theme";
 // Import your own reducer
 
 export const mockedTodos = {
@@ -61,8 +63,8 @@ function render(
       reducer: { todos: todosReducer },
       preloadedState: {
         todos: {
-          items: mockedTodos,
-          lists: mockedTodoLists,
+          items: {},
+          lists: {},
           listsOrder: mockedTodosListsOrder,
           filterStatus: [],
           search: "",
@@ -73,7 +75,9 @@ function render(
   } = {} as { preloadedState: RootState; store: AppStore },
 ) {
   const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-    <Provider store={store}>{children}</Provider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </Provider>
   );
 
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
