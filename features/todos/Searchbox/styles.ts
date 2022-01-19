@@ -27,8 +27,19 @@ export const Container = styled.div<ContainerProps>`
     }
   }
 
+  &:hover {
+    border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  }
+
+  &:focus-within {
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+
+    svg {
+      color: ${({ theme }) => theme.colors.primary};
+    }
+  }
+
   svg {
-    color: ${({ theme, focused }) =>
-      theme.colors[focused ? "primary" : "textTertiary"]};
+    color: ${({ theme }) => theme.colors.textTertiary};
   }
 `;

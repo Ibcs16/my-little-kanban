@@ -8,7 +8,6 @@ import { Container } from "./styles";
 import Icon from "../../../components/Icon";
 
 const SearchBox: React.FC = () => {
-  const [focused, setFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useAppDispatch();
@@ -22,14 +21,13 @@ const SearchBox: React.FC = () => {
     debouncedHandleChange(e.target.value);
 
   const handleOnClick = () => {
-    setFocused(true);
     if (inputRef.current) {
       inputRef.current.focus();
     }
   };
 
   return (
-    <Container onClick={handleOnClick} focused={focused}>
+    <Container onClick={handleOnClick}>
       <input
         data-testid="search-box"
         id="search"
@@ -37,7 +35,6 @@ const SearchBox: React.FC = () => {
         onChange={handleOnSearch}
         placeholder="Search cards"
         ref={inputRef}
-        onBlur={() => setFocused(false)}
       />
       <Icon name="search" size={24} />
     </Container>

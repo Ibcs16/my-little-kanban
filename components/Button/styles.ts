@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 
-export const Container = styled.div`
+export const Container = styled.button`
   padding: 16px 12px;
   border-radius: 4px;
+  border: none;
   ${props => props.theme.typography.md.paragraphMdBold}
   display: flex;
   align-items: center;
@@ -14,7 +15,8 @@ export const Container = styled.div`
   }
   max-height: 51px;
   cursor: pointer;
-  &:hover {
+  &:hover,
+  &:focus {
     opacity: 0.8;
   }
 `;

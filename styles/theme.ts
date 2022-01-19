@@ -54,6 +54,13 @@ export const theme = {
         font-size: 12px;
         line-height: 14px;
       `,
+      extraMd: css`
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+      `,
       input: css`
         font-family: Roboto;
         font-style: normal;

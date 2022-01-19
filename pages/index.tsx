@@ -7,7 +7,7 @@ import BoardDescription from "../components/BoardDescription";
 import BoardTitle from "../components/BoardTitle";
 import Button from "../components/Button";
 import Spinner from "../components/Spinner";
-import Typography from "../components/Typography";
+
 import SearchBox from "../features/todos/Searchbox";
 import StatusFilter from "../features/todos/StatusFilter";
 import { fetchTodos, selectApiStatus } from "../features/todos/todosSlice";
@@ -29,17 +29,28 @@ const Home: NextPage = () => {
       {apiStatus === "loading" && <Spinner />}
       {apiStatus === "idle" && (
         <main>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "",
+            }}
+          >
+            <div style={{ flex: 1 }}>
               <BoardTitle>Tasks</BoardTitle>
               <BoardDescription>
                 This is your personal kanban, to help you organize and aways be
                 aware of your activities 😉
               </BoardDescription>
             </div>
-            <div>
-              <SearchBox />
+            <div
+              style={{
+                marginRight: 24,
+                display: "flex",
+                gap: 18,
+              }}
+            >
               <StatusFilter />
+              <SearchBox />
             </div>
             <Button label="Add task" icon="plus" />
           </div>
