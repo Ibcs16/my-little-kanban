@@ -343,4 +343,6 @@ export const selectTodosByIds = (state: RootState, ids: string[]) => {
 
 export const selectListsOrder = (state: RootState) => state.todos.listsOrder;
 
+export const selectApiStatus = (state: RootState) => state.todos.apiStatus;
+
 export default todosSlice.reducer;
