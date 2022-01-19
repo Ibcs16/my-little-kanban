@@ -45,6 +45,16 @@ const globalStyles = (theme: Theme) => css`
     grid-area: content;
     padding: 40px 32px 24px 55px;
   }
+
+  input {
+    accent-color: ${theme.colors.primary};
+  }
+
+  main {
+    h1 {
+      margin-bottom: ;
+    }
+  }
 `;
 
 const GlobalStyle = () => {
