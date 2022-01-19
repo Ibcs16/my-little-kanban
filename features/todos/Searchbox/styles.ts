@@ -20,7 +20,7 @@ export const Container = styled.div<ContainerProps>`
     flex: 1;
     background: transparent;
     border: none;
-    ${({ theme }) => theme.typograhy.md.input}
+    ${({ theme }) => theme.typography.md.input}
 
     &::placeholder {
       color: ${({ theme }) => theme.colors.textTertiary};
