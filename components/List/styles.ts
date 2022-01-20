@@ -13,6 +13,7 @@ export const Container = styled.div<ContainerProps>`
   background: ${({ theme }) => theme.colors.bg01};
   border: 2px solid ${props => props.theme.colors.bg01};
   border-radius: 10px;
+  transition: all 200ms;
 
   header {
     display: flex;
@@ -58,6 +59,11 @@ export const Container = styled.div<ContainerProps>`
     props.isDraggingOver &&
     css`
       border: 2px dashed ${props.theme.colors.primary};
+    `};
+  ${props =>
+    props.done &&
+    css`
+      opacity: 0.2;
     `};
 `;
 

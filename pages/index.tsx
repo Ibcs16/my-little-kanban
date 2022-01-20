@@ -1,8 +1,10 @@
+import { useCycle } from "framer-motion";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { Board } from "../components";
+import AddTaskModal from "../components/AddTaskModal";
 import BoardDescription from "../components/BoardDescription";
 import BoardTitle from "../components/BoardTitle";
 import Button from "../components/Button";
@@ -10,11 +12,19 @@ import Spinner from "../components/Spinner";
 
 import SearchBox from "../features/todos/Searchbox";
 import StatusFilter from "../features/todos/StatusFilter";
-import { fetchTodos, selectApiStatus } from "../features/todos/todosSlice";
+import {
+  fetchTodos,
+  selectAllTodos,
+  selectLoadTodosApiStatus,
+} from "../features/todos/todosSlice";
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
-  const apiStatus = useAppSelector(selectApiStatus);
+  const apiStatus = useAppSelector(selectLoadTodosApiStatus);
+  const [showModal, toggleShowModal] = useCycle(false, true);
+
+  const handleOpenModal = () => toggleShowModal();
+
   useEffect(() => {
     dispatch(fetchTodos());
   }, [dispatch]);
@@ -52,7 +62,12 @@ const Home: NextPage = () => {
               <StatusFilter />
               <SearchBox />
             </div>
-            <Button label="Add task" icon="plus" />
+            <Button label="Add task" icon="plus" onClick={handleOpenModal} />
+            <AddTaskModal
+              visible={showModal}
+              onClose={handleOpenModal}
+              listStatus={"todo"}
+            />
           </div>
           <Board />
         </main>

@@ -3,8 +3,12 @@ import { motion } from "framer-motion";
 import Backdrop from "./Backdrop";
 import Button from "../Button";
 import Input from "../Input";
-import { useAppDispatch } from "../../app/hooks";
-import { addTodo } from "../../features/todos/todosSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  addTodo,
+  selectCreateTodoApiStatus,
+} from "../../features/todos/todosSlice";
+import Spinner from "../Spinner";
 
 const variants = {
   hidden: {
@@ -24,14 +28,22 @@ const variants = {
 
 interface ContentProps {
   onClose: () => void;
+  listStatus: string;
 }
 
-const Content: React.FC<ContentProps> = ({ onClose }) => {
+const statusTitleMapping: { [status: string]: string } = {
+  todo: "What's next? 💭",
+  doing: "What are you doing? 🔥",
+  done: "What have you finished? ✅",
+};
+
+const Content: React.FC<ContentProps> = ({ onClose, listStatus }) => {
   const dispatch = useAppDispatch();
+  const apiStatus = useAppSelector(selectCreateTodoApiStatus);
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    dispatch(addTodo(e.target.new_task?.value));
+    dispatch(addTodo({ title: e.target.new_task?.value, status: listStatus }));
   };
 
   return (
@@ -45,14 +57,25 @@ const Content: React.FC<ContentProps> = ({ onClose }) => {
         className="modal"
         onClick={e => e.stopPropagation()}
       >
-        <label htmlFor="new_song">{"What's next? 😎"}</label>
-        <Input name="new_task" id="new_task" placeholder="Enter task name" />
-        <Button
-          whileHover={{ scale: 1.05 }}
-          type="submit"
-          label="Add task"
-          icon="plus"
-        />
+        {apiStatus === "loading" && <Spinner />}
+        {apiStatus !== "loading" && (
+          <>
+            <label htmlFor="new_song">
+              {statusTitleMapping[listStatus || "todo"]}
+            </label>
+            <Input
+              name="new_task"
+              id="new_task"
+              placeholder="Enter task name"
+            />
+            <Button
+              whileHover={{ scale: 1.05 }}
+              type="submit"
+              label="Add task"
+              icon="plus"
+            />
+          </>
+        )}
       </motion.form>
     </Backdrop>
   );

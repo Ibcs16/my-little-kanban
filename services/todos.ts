@@ -19,21 +19,42 @@ export interface UpdateListResponse {
   finishList: TodoList;
 }
 
+export interface AddTodoRequest {
+  title: string;
+  status: string;
+}
+
+async function createTodo(newTodo: AddTodoRequest) {
+  const response = await API.post<Todo>("/todos", newTodo);
+  return response.data;
+}
+
 async function fetchTodos() {
   const responseTodos = await API.get<Todo[]>("/todos");
   const responseLists = await API.get<Todo[]>("/lists");
 
-  const items = responseTodos.data.reduce(
+  const items = (responseTodos.data?.length ? responseTodos.data : []).reduce(
     (acc, currentTodo) => ({ ...acc, [currentTodo.id]: currentTodo }),
     {},
   );
 
-  const lists = responseLists.data.reduce(
+  const lists = (responseLists.data?.length ? responseLists.data : []).reduce(
     (acc, currentList) => ({ ...acc, [currentList.id]: currentList }),
     {},
   );
 
   return { items, lists };
+}
+
+async function updateTodo(todo: Todo): Promise<Todo> {
+  const response = await API.patch<Todo>(`/lists/${todo.id}`, todo);
+
+  return response.data;
+}
+
+async function deleteTodo(id: string) {
+  const response = await API.delete<Todo>(`/todos/${id}`);
+  return response.data;
 }
 
 async function updateList(list: TodoList): Promise<UpdateListResponse> {
@@ -58,8 +79,13 @@ async function updateLists(
   return { startList: responseFrom.data, finishList: responseTo.data };
 }
 
-async function createTodo() {}
-
-const Service = { fetchTodos, updateList, updateLists, createTodo };
+const Service = {
+  fetchTodos,
+  updateList,
+  updateLists,
+  createTodo,
+  deleteTodo,
+  updateTodo,
+};
 
 export default Service;

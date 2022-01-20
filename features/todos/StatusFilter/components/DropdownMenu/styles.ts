@@ -54,6 +54,10 @@ export const Item = styled.li<ItemProps>`
     &:hover {
       color: ${props => props.theme.colors.text};
     }
+
+    input {
+      cursor: pointer;
+    }
   }
 `;
 

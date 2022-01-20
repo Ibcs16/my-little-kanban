@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "../../app/store";
 import Service, {
+  AddTodoRequest,
   UpdateListRequest,
   UpdateListResponse,
 } from "../../services/todos";
@@ -39,7 +40,9 @@ interface TodoSlice {
   search: string;
   filterStatus: string[];
   listsOrder: string[];
-  apiStatus: string;
+  loadTodosApiStatus: string;
+  createTodoApiStatus: string;
+  editTodoApiStatus: string;
 }
 
 const initialState: TodoSlice = {
@@ -48,7 +51,9 @@ const initialState: TodoSlice = {
   listsOrder: [],
   search: "",
   filterStatus: [],
-  apiStatus: "",
+  loadTodosApiStatus: "",
+  createTodoApiStatus: "",
+  editTodoApiStatus: "",
 };
 
 export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
@@ -56,14 +61,50 @@ export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
   return data;
 });
 
-export const addTodo = createAsyncThunk(
-  "todos/addTodo",
-  async (text: string) => {
-    console.log(text);
-    const data = await Service.createTodo();
-    return data;
-  },
-);
+export const deleteTodo = createAsyncThunk<
+  // Return type of the payload creator
+  Todo,
+  // First argument to the payload creator
+  Todo,
+  {
+    // Optional fields for defining thunkApi field types
+    dispatch: AppDispatch;
+    state: RootState;
+  }
+>("todos/deleteTodo", async (todo: Todo) => {
+  await Service.deleteTodo(todo.id);
+  return todo;
+});
+
+export const addTodo = createAsyncThunk<
+  // Return type of the payload creator
+  Todo,
+  // First argument to the payload creator
+  AddTodoRequest,
+  {
+    // Optional fields for defining thunkApi field types
+    dispatch: AppDispatch;
+    state: RootState;
+  }
+>("todos/addTodo", async (newTodo: AddTodoRequest) => {
+  const data = await Service.createTodo(newTodo);
+  return data;
+});
+
+export const editTodo = createAsyncThunk<
+  // Return type of the payload creator
+  Todo,
+  // First argument to the payload creator
+  Todo,
+  {
+    // Optional fields for defining thunkApi field types
+    dispatch: AppDispatch;
+    state: RootState;
+  }
+>("todos/editTodo", async (updatedTodo: Todo) => {
+  const data = await Service.updateTodo(updatedTodo);
+  return data;
+});
 
 export const updateList = createAsyncThunk<
   // Return type of the payload creator
@@ -76,7 +117,6 @@ export const updateList = createAsyncThunk<
     state: RootState;
   }
 >("lists/updateList", async payload => {
-  console.log("chama");
   const {
     startListId,
     finishListId,
@@ -131,10 +171,6 @@ const todosSlice = createSlice({
   initialState,
   name: "todos",
   reducers: {
-    todoAdded: (state, action) => {
-      const { id } = action.payload;
-      state.items[id] = action.payload;
-    },
     todoUpdated: (state, action) => {
       const { title, status, id } = action.payload as Todo;
       const oldTodo = selectTodoById({ todos: state }, id);
@@ -142,7 +178,6 @@ const todosSlice = createSlice({
       oldTodo.status = status;
       oldTodo.title = title;
     },
-    todoDragged: (state, action) => {},
 
     searchedTerm: (state, action) => {
       state.search = action.payload;
@@ -158,13 +193,46 @@ const todosSlice = createSlice({
   },
   extraReducers: builder => {
     builder
+      .addCase(addTodo.pending, (state, action) => {
+        state.createTodoApiStatus = "loading";
+      })
+      .addCase(addTodo.rejected, (state, action) => {
+        state.createTodoApiStatus = "error";
+      })
+      .addCase(addTodo.fulfilled, (state, action) => {
+        const { id, status } = action.payload;
+        state.items[id] = action.payload;
+        const list = Object.values(state.lists).find(
+          list => list.statusName === status,
+        );
+        if (list) {
+          state.lists[list.id].cardIds =
+            state.lists[list.id].cardIds.concat(id);
+        }
+        state.createTodoApiStatus = "idle";
+      })
       .addCase(fetchTodos.pending, (state, action) => {
-        state.apiStatus = "loading";
+        state.loadTodosApiStatus = "loading";
+      })
+      .addCase(deleteTodo.pending, (state, action) => {
+        state.editTodoApiStatus = "loading";
+      })
+      .addCase(deleteTodo.fulfilled, (state, action) => {
+        const { id, status } = action.payload;
+        delete state.items[id];
+        const list = Object.values(state.lists).find(
+          list => list.statusName === status,
+        );
+        if (list) {
+          const itemIndex = list.cardIds.findIndex(findId => findId === id);
+          state.lists[list.id].cardIds.splice(itemIndex, 1);
+        }
+        state.editTodoApiStatus = "idle";
       })
       .addCase(fetchTodos.fulfilled, (state, action) => {
         state.items = action.payload.items;
         state.lists = action.payload.lists;
-        state.apiStatus = "idle";
+        state.loadTodosApiStatus = "idle";
       })
       .addCase(updateList.pending, (state, action) => {
         const {
@@ -211,62 +279,7 @@ const todosSlice = createSlice({
         state.lists[startListId] = newStartList;
         state.lists[finishListId] = newFinishList;
       })
-      .addCase(updateList.fulfilled, (state, action) => {
-        state.apiStatus = "idle";
-      });
-    // .addCase(updateList.rejected, (state, action) => {
-    //   const {
-    //     startListId,
-    //     finishListId,
-    //     itemId,
-    //     fromItemIndex,
-    //     toItemIndex,
-    //   } = action.meta.arg;
-
-    //   // get list source and destination
-    //   const startList = state.lists[finishListId];
-    //   const finishList = state.lists[startListId];
-
-    //   // check if user is dragging within same list
-    //   if (startList === finishList) {
-    //     // update cardIds
-    //     const newTodoIds = Array.from(startList.cardIds);
-    //     newTodoIds.splice(toItemIndex, 1);
-    //     newTodoIds.splice(fromItemIndex, 0, itemId);
-
-    //     const newList = {
-    //       ...startList,
-    //       cardIds: newTodoIds,
-    //     };
-
-    //     // update list with updated items
-    //     state.lists[startListId] = newList;
-    //     return;
-    //   }
-
-    //   // User is moving between lists
-
-    //   // remove card from source list
-    //   const startCardIds = Array.from(startList.cardIds);
-    //   startCardIds.splice(toItemIndex, 1);
-    //   const newStartList = {
-    //     ...startList,
-    //     cardIds: startCardIds,
-    //   };
-
-    //   // add it to the destination list
-    //   const finishCardIds = Array.from(finishList.cardIds);
-    //   finishCardIds.splice(fromItemIndex, 0, itemId);
-    //   const newFinishList = {
-    //     ...finishList,
-    //     cardIds: finishCardIds,
-    //   };
-
-    //   // upload lists
-    //   state.lists[startListId] = newStartList;
-    //   state.lists[finishListId] = newFinishList;
-    //   state.apiStatus = "error";
-    // });
+      .addCase(updateList.fulfilled, (state, action) => {});
   },
 });
 
@@ -275,7 +288,6 @@ export const {
   checkedFilterStatus,
   uncheckedFilterStatus,
   todoUpdated,
-  todoDragged,
 } = todosSlice.actions;
 
 export const selectAllTodoLists = (state: RootState) => state.todos.lists;
@@ -351,6 +363,13 @@ export const selectTodosByIds = (state: RootState, ids: string[]) => {
 
 export const selectListsOrder = (state: RootState) => state.todos.listsOrder;
 
-export const selectApiStatus = (state: RootState) => state.todos.apiStatus;
+export const selectLoadTodosApiStatus = (state: RootState) =>
+  state.todos.loadTodosApiStatus;
+
+export const selectCreateTodoApiStatus = (state: RootState) =>
+  state.todos.createTodoApiStatus;
+
+export const selectEditTodoApiStatus = (state: RootState) =>
+  state.todos.editTodoApiStatus;
 
 export default todosSlice.reducer;

@@ -5,6 +5,7 @@ import Content from "./Content";
 interface ModalProps {
   visible: boolean;
   onClose: () => void;
+  listStatus: string;
 }
 
 const AddTaskModal: React.FC<ModalProps> = ({ visible, ...others }) => {

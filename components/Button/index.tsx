@@ -6,13 +6,14 @@ import { Container } from "./styles";
 interface ButtonProps {
   label: string;
   icon: string;
+  onClick: () => void;
   [key: string]: any;
 }
 
-const Button: React.FC<ButtonProps> = ({ icon, label, ...others }) => {
+const Button: React.FC<ButtonProps> = ({ icon, label, onClick, ...others }) => {
   if (!label) return null;
   return (
-    <Container>
+    <Container onClick={onClick}>
       {label}
       {icon && <Icon name={icon} size={18} {...others} />}
     </Container>

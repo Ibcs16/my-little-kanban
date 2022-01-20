@@ -6,6 +6,7 @@ import {
 } from "framer-motion";
 import React from "react";
 import Icon from "../../../Icon";
+import Spinner from "../../../Spinner";
 
 import { Container } from "./styles";
 
@@ -29,8 +30,22 @@ const itemAnimation = {
   show: { opacity: 1 },
 };
 
-const Actions: React.FC = () => {
+interface ActionsProps {
+  onEdit: () => void;
+  onDelete: () => void;
+  loading?: boolean;
+}
+
+const Actions: React.FC<ActionsProps> = ({ loading, onEdit, onDelete }) => {
   const [showActions, toggleActions] = useCycle(false, true);
+
+  if (loading) {
+    return (
+      <div className="actionsMenu">
+        <Spinner size="sm" />
+      </div>
+    );
+  }
   return (
     <Container className="actionsMenu">
       <AnimatePresence exitBeforeEnter initial={false}>
@@ -46,6 +61,7 @@ const Actions: React.FC = () => {
               variants={itemAnimation}
               initial="hidden"
               animate="show"
+              onClick={onEdit}
             >
               <Icon size={18} name="edit" />
             </motion.button>
@@ -53,6 +69,7 @@ const Actions: React.FC = () => {
               variants={itemAnimation}
               initial="hidden"
               animate="show"
+              onClick={onDelete}
             >
               <Icon size={18} name="delete" />
             </motion.button>

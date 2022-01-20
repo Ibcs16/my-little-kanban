@@ -3,9 +3,12 @@ import Card, { ITEM_TYPE } from "../Card";
 
 import { Container, AddTodoText } from "./styles";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { useAppSelector } from "../../app/hooks";
-import { selectAllTodos } from "../../features/todos/todosSlice";
+import {
+  selectAllFilterStatus,
+  selectAllTodos,
+} from "../../features/todos/todosSlice";
 
 import { Droppable } from "react-beautiful-dnd";
 import { TodoList } from "../../features/todos/models/todo";
@@ -20,21 +23,29 @@ interface TodoListProps {
 const List: React.FC<TodoListProps> = ({ data }) => {
   const { statusName, title } = data;
   const todos = useAppSelector(selectAllTodos);
+  const filterStatus = useAppSelector(selectAllFilterStatus);
   const [showModal, toggleShowModal] = useCycle(false, true);
 
-  const hasButton = statusName === "todo";
-
   const handleOpenModal = () => toggleShowModal();
+
+  const notInFilter = useMemo(
+    () => filterStatus.length > 0 && !filterStatus.includes(data.statusName),
+    [filterStatus, data.statusName],
+  );
 
   if (!statusName) return null;
 
   return (
     <>
-      <Droppable droppableId={data.id} type={ITEM_TYPE}>
+      <Droppable
+        droppableId={data.id}
+        type={ITEM_TYPE}
+        isDropDisabled={notInFilter}
+      >
         {(provided, snapshot) => (
           <Container
             ref={provided.innerRef}
-            done={statusName === "done"}
+            done={notInFilter}
             {...provided.droppableProps}
             {...snapshot}
             isDraggingOver={
@@ -71,7 +82,11 @@ const List: React.FC<TodoListProps> = ({ data }) => {
           </Container>
         )}
       </Droppable>
-      <AddTaskModal visible={showModal} onClose={handleOpenModal} />
+      <AddTaskModal
+        visible={showModal}
+        onClose={handleOpenModal}
+        listStatus={data.statusName}
+      />
     </>
   );
 };

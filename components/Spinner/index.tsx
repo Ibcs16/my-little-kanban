@@ -35,9 +35,13 @@ const animations = {
   },
 };
 
-const Spinner: React.FC = () => {
+interface SpinnerProps {
+  size?: "sm" | "md" | "lg";
+}
+
+const Spinner: React.FC<SpinnerProps> = ({ size }) => {
   return (
-    <Container>
+    <Container size={size || "lg"}>
       <div className="lds-facebook">
         <div></div>
         <div></div>
