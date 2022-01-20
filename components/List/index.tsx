@@ -51,6 +51,7 @@ const List: React.FC<TodoListProps> = ({ data }) => {
             isDraggingOver={
               !snapshot.draggingFromThisWith && !!snapshot.draggingOverWith
             }
+            data-testid={`list-${data.id}`}
           >
             <header>
               <div className="titleWrapper">

@@ -1,4 +1,4 @@
-import { act, fireEvent, screen, waitFor } from "@testing-library/react";
+import { act, screen, waitFor } from "@testing-library/react";
 import Home from "../pages/index";
 import { render, mockedTodos } from "../utils/test-utils";
 import userEvent from "@testing-library/user-event";

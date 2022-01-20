@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 
 interface ContainerProps {
   isDragging?: boolean;
-  loading?: boolean;
+  isLoading?: boolean;
 }
 
-export const Container = styled.div<ContainerProps>`
+export const Container = styled.li<ContainerProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -90,7 +90,7 @@ export const Container = styled.div<ContainerProps>`
     `}
 
   ${props =>
-    props.loading &&
+    props.isLoading &&
     css`
       .actionsMenu {
         display: flex;

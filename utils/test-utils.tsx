@@ -1,5 +1,5 @@
 // ts-ignore
-import React from "react";
+import React, { Fragment } from "react";
 import { render as rtlRender } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
@@ -7,9 +7,15 @@ import todosReducer, { TodoSlice } from "../features/todos/todosSlice";
 import { AppStore, RootState } from "../app/store";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "../styles/theme";
+import { DragDropContext } from "react-beautiful-dnd";
 // Import your own reducer
 
 export const mockedTodos = {
+  "1": {
+    id: "1",
+    title: "Init project",
+    status: "done",
+  },
   "2": {
     id: "2",
     title: "Finish project",
@@ -25,11 +31,6 @@ export const mockedTodos = {
     title: "Design layout",
     status: "done",
   },
-  "1": {
-    id: "1",
-    title: "Init project",
-    status: "done",
-  },
 };
 
 export const mockedTodoLists = {
@@ -37,7 +38,7 @@ export const mockedTodoLists = {
     id: "1",
     title: "To do 💭",
     statusName: "todo",
-    cardIds: ["2"],
+    cardIds: ["1", "2"],
     order: "0",
   },
   "2": {
@@ -51,12 +52,25 @@ export const mockedTodoLists = {
     id: "3",
     title: "Done ✅",
     statusName: "done",
-    cardIds: ["1", "4"],
+    cardIds: ["4"],
     order: "2",
   },
 };
 
 export const mockedTodosListsOrder = ["1", "2", "3"];
+
+export const preloadedState = {
+  todos: {
+    items: mockedTodos,
+    lists: mockedTodoLists,
+    listsOrder: mockedTodosListsOrder,
+    filterStatus: [],
+    search: "",
+    loadTodosApiStatus: "",
+    editTodoApiStatus: "",
+    createTodoApiStatus: "",
+  } as TodoSlice,
+};
 
 function render(
   ui: React.ReactElement,
@@ -64,27 +78,31 @@ function render(
     preloadedState,
     store = configureStore({
       reducer: { todos: todosReducer },
-      preloadedState: {
-        todos: {
-          items: {},
-          lists: mockedTodoLists,
-          listsOrder: mockedTodosListsOrder,
-          filterStatus: [],
-          search: "",
-          loadTodosApiStatus: "",
-          editTodoApiStatus: "",
-          createTodoApiStatus: "",
-        } as TodoSlice,
-      },
+      preloadedState,
     }),
     ...renderOptions
-  } = {} as { preloadedState: RootState; store: AppStore },
+  } = {} as {
+    preloadedState?: RootState;
+    store?: AppStore;
+    withDragProvider: boolean;
+  },
 ) {
-  const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
-    </Provider>
-  );
+  const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { withDragProvider } = renderOptions;
+
+    children = withDragProvider ? (
+      <DragDropContext onDragStart={() => {}} onDragEnd={() => {}}>
+        {children}
+      </DragDropContext>
+    ) : (
+      children
+    );
+    return (
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </Provider>
+    );
+  };
 
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }

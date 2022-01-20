@@ -68,12 +68,15 @@ const Card: React.FC<CardProps> = ({ data, index }) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           {...snapshot}
-          loading={isEditing && editApiStatus === "loading"}
+          isLoading={isEditing ? editApiStatus === "loading" : false}
+          role="listitem"
+          tabIndex={1}
+          data-testid={`task`}
         >
           <div className="content">
-            {/* {!isEditing && <strong>{newText || data.title}</strong>} */}
+            {!isEditing && <strong>{newText || data.title}</strong>}
             {/* {isEditing && ( */}
-            <TitleEditInput
+            {/* <TitleEditInput
               name={`card-${data.id}-input`}
               onChange={onTextChange}
               value={newText}
@@ -84,7 +87,7 @@ const Card: React.FC<CardProps> = ({ data, index }) => {
               tabIndex={isEditing ? 0 : -1}
               // disabled={!isEditing}
               // show={isEditing}
-            />
+            /> */}
             {/* )} */}
           </div>
           <Actions
