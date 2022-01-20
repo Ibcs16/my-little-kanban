@@ -49,7 +49,7 @@ const Board: React.FC = () => {
   );
 
   return (
-    <Container>
+    <Container data-testid="board">
       <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
         {Object.values(lists)
           .sort((a, b) => Number(a.order) - Number(b.order))

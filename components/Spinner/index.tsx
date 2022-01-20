@@ -41,7 +41,7 @@ interface SpinnerProps {
 
 const Spinner: React.FC<SpinnerProps> = ({ size }) => {
   return (
-    <Container size={size || "lg"}>
+    <Container size={size || "lg"} data-testid="spinner">
       <div className="lds-facebook">
         <div></div>
         <div></div>

@@ -49,6 +49,6 @@ test("fetch lists and items after rendering", async () => {
   expect(screen.queryAllByText(/fake-list/i)).toHaveLength(0);
   expect(screen.queryByText(/fake-todo/i)).not.toBeInTheDocument();
   // should show list in filters and board after fetching
-  expect(await screen.findAllByText(/fake-list/i)).toHaveLength(2);
+  expect(await screen.findAllByText(/fake-list/i)).toHaveLength(1);
   expect(await screen.findByText(/fake-todo/i)).toBeInTheDocument();
 });

@@ -83,7 +83,7 @@ describe("List", () => {
     });
 
     const [card] = screen.getAllByRole("listitem");
-    const list = screen.getByTestId(`list-${mockedList.id}`);
+    const list = screen.getByTestId(`list`);
 
     fireEvent.dragStart(card);
     fireEvent.dragEnter(list);
