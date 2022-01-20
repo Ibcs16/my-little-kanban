@@ -43,7 +43,11 @@ const Content: React.FC<ContentProps> = ({ onClose, listStatus }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    dispatch(addTodo({ title: e.target.new_task?.value, status: listStatus }));
+    if (!e.target.new_task) return;
+    dispatch(addTodo({ title: e.target.new_task.value, status: listStatus }));
+    setTimeout(() => {
+      onClose();
+    }, 400);
   };
 
   return (
@@ -56,23 +60,26 @@ const Content: React.FC<ContentProps> = ({ onClose, listStatus }) => {
         exit="exit"
         className="modal"
         onClick={e => e.stopPropagation()}
+        data-testid="modal"
       >
         {apiStatus === "loading" && <Spinner />}
         {apiStatus !== "loading" && (
           <>
-            <label htmlFor="new_song">
+            <label htmlFor="new_task">
               {statusTitleMapping[listStatus || "todo"]}
             </label>
             <Input
               name="new_task"
               id="new_task"
               placeholder="Enter task name"
+              data-testid="add-task-input"
+              type="text"
             />
             <Button
-              whileHover={{ scale: 1.05 }}
               type="submit"
               label="Add task"
               icon="plus"
+              data-testid="add-task-btn"
             />
           </>
         )}

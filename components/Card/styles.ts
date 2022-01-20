@@ -46,10 +46,6 @@ export const Container = styled.li<ContainerProps>`
     transition: all 300ms;
   }
 
-  .actionsMenu {
-    display: none;
-  }
-
   &:hover,
   &:focus-within {
     strong {

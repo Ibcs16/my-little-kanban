@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
-  display: flex;
+  display: none;
   gap: 4px;
 
   button {

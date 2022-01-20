@@ -29,6 +29,7 @@ const DropdownMenu: React.FC<DropDownMenu> = ({
       variants={menuAnimation}
       animate="visible"
       initial="hidden"
+      exit="hidden"
       {...others}
     >
       <input ref={hiddenInputRef} type="hidden" tabIndex={5} />

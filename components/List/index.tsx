@@ -62,8 +62,12 @@ const List: React.FC<TodoListProps> = ({ data }) => {
                 )}
               </div>
 
-              <button type="button">
-                <Icon size={18} name="plus" onClick={handleOpenModal} />
+              <button
+                type="button"
+                onClick={handleOpenModal}
+                data-testid="open-modal-button"
+              >
+                <Icon size={18} name="plus" />
               </button>
             </header>
             <ul>

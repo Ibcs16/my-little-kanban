@@ -47,7 +47,7 @@ const Actions: React.FC<ActionsProps> = ({ loading, onOpenEdit, onDelete }) => {
     );
   }
   return (
-    <Container className="actionsMenu">
+    <Container className="actionsMenu" data-testid="options-menu">
       <AnimatePresence exitBeforeEnter initial={false}>
         {showActions && (
           <motion.div
@@ -56,6 +56,7 @@ const Actions: React.FC<ActionsProps> = ({ loading, onOpenEdit, onDelete }) => {
             animate="visible"
             exit="exit"
             className="actions"
+            data-testid="actions"
           >
             <motion.button
               variants={itemAnimation}
@@ -76,7 +77,11 @@ const Actions: React.FC<ActionsProps> = ({ loading, onOpenEdit, onDelete }) => {
           </motion.div>
         )}
       </AnimatePresence>
-      <button id="menu-button" onClick={() => toggleActions()}>
+      <button
+        id="menu-button"
+        data-testid="menu-btn"
+        onClick={() => toggleActions()}
+      >
         <Icon size={18} name={showActions ? "close" : "moreV"} />
       </button>
     </Container>
