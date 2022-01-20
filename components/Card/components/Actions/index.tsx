@@ -31,12 +31,12 @@ const itemAnimation = {
 };
 
 interface ActionsProps {
-  onEdit: () => void;
+  onOpenEdit: () => void;
   onDelete: () => void;
   loading?: boolean;
 }
 
-const Actions: React.FC<ActionsProps> = ({ loading, onEdit, onDelete }) => {
+const Actions: React.FC<ActionsProps> = ({ loading, onOpenEdit, onDelete }) => {
   const [showActions, toggleActions] = useCycle(false, true);
 
   if (loading) {
@@ -61,7 +61,7 @@ const Actions: React.FC<ActionsProps> = ({ loading, onEdit, onDelete }) => {
               variants={itemAnimation}
               initial="hidden"
               animate="show"
-              onClick={onEdit}
+              onClick={onOpenEdit}
             >
               <Icon size={18} name="edit" />
             </motion.button>

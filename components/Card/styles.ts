@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 interface ContainerProps {
   isDragging?: boolean;
+  loading?: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -49,7 +50,8 @@ export const Container = styled.div<ContainerProps>`
     display: none;
   }
 
-  &:hover {
+  &:hover,
+  &:focus-within {
     strong {
       color: ${({ theme }) => theme.colors.primary};
     }
@@ -86,4 +88,27 @@ export const Container = styled.div<ContainerProps>`
       }
       opacity: 0.8;
     `}
+
+  ${props =>
+    props.loading &&
+    css`
+      .actionsMenu {
+        display: flex;
+      }
+    `}
+`;
+
+interface TitleEditInputProps {
+  show?: boolean;
+}
+
+export const TitleEditInput = styled.input<TitleEditInputProps>`
+  border: none;
+
+  &:focus {
+    border-bottom: 1px solid ${props => props.theme.colors.primary};
+  }
+  width: 150px;
+  background: none;
+  padding-bototm: 4px;
 `;

@@ -9,8 +9,6 @@ export const Container = styled.div`
     padding: 4px;
     background: none;
     transition: all 200ms;
-
-
   }
 
   svg {

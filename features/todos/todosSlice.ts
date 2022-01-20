@@ -196,6 +196,17 @@ const todosSlice = createSlice({
       .addCase(addTodo.pending, (state, action) => {
         state.createTodoApiStatus = "loading";
       })
+      .addCase(editTodo.pending, (state, action) => {
+        state.editTodoApiStatus = "loading";
+        const { title, status, id } = action.meta.arg;
+        const oldTodo = selectTodoById({ todos: state }, id);
+        if (!oldTodo) return;
+        oldTodo.status = status;
+        oldTodo.title = title;
+      })
+      .addCase(editTodo.fulfilled, (state, action) => {
+        state.editTodoApiStatus = "idle";
+      })
       .addCase(addTodo.rejected, (state, action) => {
         state.createTodoApiStatus = "error";
       })

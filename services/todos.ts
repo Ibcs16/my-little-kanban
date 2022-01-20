@@ -47,7 +47,7 @@ async function fetchTodos() {
 }
 
 async function updateTodo(todo: Todo): Promise<Todo> {
-  const response = await API.patch<Todo>(`/lists/${todo.id}`, todo);
+  const response = await API.put<Todo>(`/todos/${todo.id}`, todo);
 
   return response.data;
 }

@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import { useCycle } from "framer-motion";
+import React, { useCallback, useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import { Todo } from "../../features/todos/models/todo";
 import {
   deleteTodo,
+  editTodo,
   selectEditTodoApiStatus,
 } from "../../features/todos/todosSlice";
 import Actions from "./components/Actions";
 
-import { Container } from "./styles";
+import { Container, TitleEditInput } from "./styles";
 
 interface CardProps {
   data: Todo;
@@ -19,19 +21,45 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ data, index }) => {
   const dispatch = useAppDispatch();
   const editApiStatus = useAppSelector(selectEditTodoApiStatus);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useCycle(false, true);
+  const [newText, setNewText] = useState(data.title);
+  const editInputRef = useRef<HTMLInputElement>(null);
 
-  const handleEdit = () => {};
+  const toggleIsEditing = () => setIsEditing();
+
+  const handleEdit = () => {
+    if (!newText) {
+      setNewText(data.title);
+      return;
+    }
+    dispatch(editTodo({ ...data, title: newText }));
+
+    setTimeout(() => {
+      toggleIsEditing();
+    }, 800);
+  };
+
+  const handleOpenEdit = () => {
+    toggleIsEditing();
+    if (editInputRef.current) {
+      editInputRef.current.focus();
+    }
+  };
 
   const handleDelete = () => {
     if (window.confirm(`Are you sure you want to delete "${data.title}"?`)) {
-      setIsEditing(true);
+      toggleIsEditing();
       dispatch(deleteTodo(data));
       setTimeout(() => {
-        setIsEditing(false);
+        toggleIsEditing();
       }, 800);
     }
   };
+
+  const onTextChange = (e: { target: HTMLInputElement }) => {
+    setNewText(e.target.value);
+  };
+
   return (
     <Draggable draggableId={data.id} index={index}>
       {(provided, snapshot) => (
@@ -40,12 +68,27 @@ const Card: React.FC<CardProps> = ({ data, index }) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           {...snapshot}
+          loading={isEditing && editApiStatus === "loading"}
         >
           <div className="content">
-            <strong>{data.title}</strong>
+            {/* {!isEditing && <strong>{newText || data.title}</strong>} */}
+            {/* {isEditing && ( */}
+            <TitleEditInput
+              name={`card-${data.id}-input`}
+              onChange={onTextChange}
+              value={newText}
+              onBlur={handleEdit}
+              ref={editInputRef}
+              placeholder="Unknown"
+              // readOnly={!isEditing}
+              tabIndex={isEditing ? 0 : -1}
+              // disabled={!isEditing}
+              // show={isEditing}
+            />
+            {/* )} */}
           </div>
           <Actions
-            onEdit={handleEdit}
+            onOpenEdit={handleOpenEdit}
             onDelete={handleDelete}
             loading={isEditing && editApiStatus === "loading"}
           />
