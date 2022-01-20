@@ -1,4 +1,4 @@
-import { useCycle } from "framer-motion";
+import { AnimatePresence, useCycle } from "framer-motion";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
@@ -30,16 +30,21 @@ const StatusFilter: React.FC = () => {
   return (
     <>
       <Container>
-        <FilterButton onClick={() => toggleMenu()} active={menuShow} />
+        <FilterButton
+          onClick={() => toggleMenu()}
+          active={menuShow || !!filterStatus.length}
+        />
 
-        {menuShow && (
-          <DropdownMenu
-            toggleMenu={() => toggleMenu()}
-            onToggleItem={onToggleItem}
-            lists={lists}
-            filterStatus={filterStatus}
-          />
-        )}
+        <AnimatePresence initial={false} exitBeforeEnter>
+          {menuShow && (
+            <DropdownMenu
+              toggleMenu={() => toggleMenu()}
+              onToggleItem={onToggleItem}
+              lists={lists}
+              filterStatus={filterStatus}
+            />
+          )}
+        </AnimatePresence>
       </Container>
       {menuShow && <Portal onClick={() => toggleMenu()} />}
     </>

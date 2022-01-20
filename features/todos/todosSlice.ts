@@ -56,6 +56,15 @@ export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
   return data;
 });
 
+export const addTodo = createAsyncThunk(
+  "todos/addTodo",
+  async (text: string) => {
+    console.log(text);
+    const data = await Service.createTodo();
+    return data;
+  },
+);
+
 export const updateList = createAsyncThunk<
   // Return type of the payload creator
   UpdateListResponse,
@@ -262,7 +271,6 @@ const todosSlice = createSlice({
 });
 
 export const {
-  todoAdded,
   searchedTerm,
   checkedFilterStatus,
   uncheckedFilterStatus,

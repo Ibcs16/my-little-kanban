@@ -55,6 +55,37 @@ const globalStyles = (theme: Theme) => css`
       margin-bottom: ;
     }
   }
+
+  .modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: clamp(540px, 540px, 90%);
+    padding: 45px 67px;
+    background: white;
+
+    border-radius: 20px;
+
+    border: 2px solid transparent;
+
+    label {
+      ${theme.typography.md.headingLg}
+      margin-bottom: 20px;
+    }
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 9999;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const GlobalStyle = () => {

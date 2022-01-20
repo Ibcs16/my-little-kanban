@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 
-export const Container = styled.dialog`
+export const Container = styled(motion.dialog)`
   display: flex;
   flex-direction: column;
   width: 320px;
@@ -55,3 +56,14 @@ export const Item = styled.li<ItemProps>`
     }
   }
 `;
+
+export const menuAnimation = {
+  hidden: {
+    opacity: 0,
+    scale: 0,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+  },
+};

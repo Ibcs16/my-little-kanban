@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Icon from "../../../../../components/Icon";
 import { TodoList } from "../../../models/todo";
 
-import { Container, Item } from "./styles";
+import { Container, Item, menuAnimation } from "./styles";
 
 interface DropDownMenu {
   onToggleItem: (key: string, e: { target: HTMLInputElement }) => void;
@@ -24,7 +24,7 @@ const DropdownMenu: React.FC<DropDownMenu> = ({
     }
   }, []);
   return (
-    <Container>
+    <Container variants={menuAnimation} animate="visible" initial="hidden">
       <input ref={hiddenInputRef} type="hidden" tabIndex={5} />
       <header>
         <strong>Filters:</strong>

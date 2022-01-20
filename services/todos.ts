@@ -58,6 +58,8 @@ async function updateLists(
   return { startList: responseFrom.data, finishList: responseTo.data };
 }
 
-const Service = { fetchTodos, updateList, updateLists };
+async function createTodo() {}
+
+const Service = { fetchTodos, updateList, updateLists, createTodo };
 
 export default Service;

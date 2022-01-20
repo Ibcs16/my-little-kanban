@@ -6,6 +6,7 @@ import { Container } from "./styles";
 interface ButtonProps {
   label: string;
   icon: string;
+  [key: string]: any;
 }
 
 const Button: React.FC<ButtonProps> = ({ icon, label, ...others }) => {
