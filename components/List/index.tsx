@@ -1,7 +1,7 @@
 import { MdAdd } from "react-icons/md";
 import Card, { ITEM_TYPE } from "../Card";
 
-import { Container } from "./styles";
+import { Container, AddTodoText } from "./styles";
 
 import React from "react";
 import { useAppSelector } from "../../app/hooks";
@@ -57,6 +57,10 @@ const List: React.FC<TodoListProps> = ({ data }) => {
                 ) : null,
               )}
             {provided.placeholder}
+            <AddTodoText>
+              Add task
+              <Icon size={12} name="plus" />
+            </AddTodoText>
           </ul>
         </Container>
       )}

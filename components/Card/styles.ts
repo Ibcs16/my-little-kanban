@@ -20,6 +20,8 @@ export const Container = styled.div<ContainerProps>`
   cursor: grab;
   position: relative;
 
+  transition: all 400ms;
+
   font-weight: 500;
 
   .content {

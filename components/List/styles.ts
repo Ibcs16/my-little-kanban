@@ -60,3 +60,25 @@ export const Container = styled.div<ContainerProps>`
       border: 2px dashed ${props.theme.colors.primary};
     `};
 `;
+
+export const AddTodoText = styled.div`
+  ${props => props.theme.typography.md.extra}
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+
+  cursor: pointer;
+
+  &,
+  svg {
+    color: ${props => props.theme.colors.textTertiary};
+    transition: all 300ms;
+  }
+
+  &:hover,
+  &:hover svg {
+    color: ${props => props.theme.colors.textSecondary};
+  }
+`;
