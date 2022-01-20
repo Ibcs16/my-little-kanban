@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import Icon from "../../../../../components/Icon";
-import { TodoList } from "../../../models/todo";
+import Icon from "../../../Icon";
+import { TodoList } from "../../../../features/todos/models/todo";
 
 import { Container, Item, menuAnimation } from "./styles";
 
@@ -16,6 +16,7 @@ const DropdownMenu: React.FC<DropDownMenu> = ({
   lists,
   filterStatus,
   toggleMenu,
+  ...others
 }) => {
   const hiddenInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -24,11 +25,22 @@ const DropdownMenu: React.FC<DropDownMenu> = ({
     }
   }, []);
   return (
-    <Container variants={menuAnimation} animate="visible" initial="hidden">
+    <Container
+      variants={menuAnimation}
+      animate="visible"
+      initial="hidden"
+      {...others}
+    >
       <input ref={hiddenInputRef} type="hidden" tabIndex={5} />
       <header>
         <strong>Filters:</strong>
-        <Icon name="close" size={16} cursor="pointer" onClick={toggleMenu} />
+        <Icon
+          data-testid="filter-dropdown-close-button"
+          name="close"
+          size={16}
+          cursor="pointer"
+          onClick={toggleMenu}
+        />
       </header>
       <ul>
         {Object.values(lists)

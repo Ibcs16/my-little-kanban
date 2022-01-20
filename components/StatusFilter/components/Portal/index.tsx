@@ -7,7 +7,7 @@ interface PortalProps {
 }
 
 const Portal: React.FC<PortalProps> = ({ ...others }) => {
-  return <Container className="portal" {...others} />;
+  return <Container data-testid="portal" className="portal" {...others} />;
 };
 
 export default Portal;

@@ -11,7 +11,7 @@ import Button from "../components/Button";
 import Spinner from "../components/Spinner";
 
 import SearchBox from "../features/todos/Searchbox";
-import StatusFilter from "../features/todos/StatusFilter";
+import StatusFilter from "../components/StatusFilter";
 import {
   fetchTodos,
   selectAllTodos,

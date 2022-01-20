@@ -38,18 +38,21 @@ export const mockedTodoLists = {
     title: "To do 💭",
     statusName: "todo",
     cardIds: ["2"],
+    order: "0",
   },
   "2": {
     id: "2",
     title: "Doing 🔥",
     statusName: "doing",
     cardIds: ["3"],
+    order: "1",
   },
   "3": {
     id: "3",
     title: "Done ✅",
     statusName: "done",
     cardIds: ["1", "4"],
+    order: "2",
   },
 };
 
@@ -64,7 +67,7 @@ function render(
       preloadedState: {
         todos: {
           items: {},
-          lists: {},
+          lists: mockedTodoLists,
           listsOrder: mockedTodosListsOrder,
           filterStatus: [],
           search: "",

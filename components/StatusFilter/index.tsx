@@ -1,13 +1,13 @@
 import { AnimatePresence, useCycle } from "framer-motion";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import {
   checkedFilterStatus,
   selectAllFilterStatus,
   selectAllTodoLists,
   uncheckedFilterStatus,
-} from "../todosSlice";
+} from "../../features/todos/todosSlice";
 import DropdownMenu from "./components/DropdownMenu";
 import FilterButton from "./components/FilterButton";
 import Portal from "./components/Portal";
@@ -32,6 +32,7 @@ const StatusFilter: React.FC = () => {
       <Container>
         <FilterButton
           onClick={() => toggleMenu()}
+          data-testid="filter-toggle-button"
           active={menuShow || !!filterStatus.length}
         />
 
@@ -42,6 +43,7 @@ const StatusFilter: React.FC = () => {
               onToggleItem={onToggleItem}
               lists={lists}
               filterStatus={filterStatus}
+              data-testid="filter-dropdown"
             />
           )}
         </AnimatePresence>
