@@ -2,6 +2,7 @@ import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 import { Todo } from "../../features/todos/models/todo";
+import Actions from "./components/Actions";
 
 import { Container } from "./styles";
 
@@ -20,7 +21,10 @@ const Card: React.FC<CardProps> = ({ data, index }) => {
           ref={provided.innerRef}
           {...snapshot}
         >
-          <strong>{data.title}</strong>
+          <div className="content">
+            <strong>{data.title}</strong>
+          </div>
+          <Actions />
         </Container>
       )}
     </Draggable>

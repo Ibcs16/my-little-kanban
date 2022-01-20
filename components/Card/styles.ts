@@ -1,12 +1,17 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 
 interface ContainerProps {
   isDragging?: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 16px;
+  height: 48px;
 
   background: white;
   box-shadow: ${({ theme }) => theme.shadows.sm};
@@ -17,12 +22,35 @@ export const Container = styled.div<ContainerProps>`
 
   font-weight: 500;
 
-  ${({ theme }) => theme.typography.md.paragraphMdBold}
+  .content {
+    width: 150px;
 
-  color: ${({ theme }) => theme.colors.textSecondary};
+    strong {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  strong,
+  input {
+    ${({ theme }) => theme.typography.md.paragraphMdBold}
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
+
+  strong {
+    display: block;
+    transition: all 300ms;
+  }
+
+  .actionsMenu {
+    display: none;
+  }
 
   &:hover {
-    color: ${({ theme }) => theme.colors.primary};
+    strong {
+      color: ${({ theme }) => theme.colors.primary};
+    }
     background: ${({ theme }) => theme.colors.secondary};
     &::before {
       content: "";
@@ -33,6 +61,10 @@ export const Container = styled.div<ContainerProps>`
       border-radius: 4px;
       left: 0;
       top: 0;
+    }
+
+    .actionsMenu {
+      display: flex;
     }
   }
 

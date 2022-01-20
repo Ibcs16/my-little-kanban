@@ -17,9 +17,14 @@ const Header: React.FC = () => {
       {/* <div>Logo</div> */}
       <nav>
         {menuItems.map(({ page, icon }) => (
-          <Link key={page} href={`/${page}`} passHref>
-            <MenuItem name={page} size={24} active={activePage === page} />
-          </Link>
+          // <Link key={page} href={`/${page}`} passHref>
+          <MenuItem
+            key={page}
+            name={page}
+            size={24}
+            active={activePage === page}
+          />
+          // </Link>
         ))}
       </nav>
       <Icon size={24} name="settings" />
