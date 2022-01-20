@@ -6,7 +6,7 @@ import { Container } from "./styles";
 interface ButtonProps {
   label: string;
   icon: string;
-  onClick: () => void;
+  onClick?: () => void;
   [key: string]: any;
 }
 
