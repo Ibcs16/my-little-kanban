@@ -30,13 +30,17 @@ export const todoLists = [
   },
 ];
 
-interface TodoSlice {
-  items: {
-    [id: string]: Todo;
-  };
-  lists: {
-    [id: string]: TodoList;
-  };
+interface TodoSliceItems {
+  [id: string]: Todo;
+}
+
+interface TodoSliceLists {
+  [id: string]: TodoList;
+}
+
+export interface TodoSlice {
+  items: TodoSliceItems;
+  lists: TodoSliceLists;
   search: string;
   filterStatus: string[];
   listsOrder: string[];

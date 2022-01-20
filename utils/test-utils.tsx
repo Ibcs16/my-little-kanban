@@ -3,7 +3,7 @@ import React from "react";
 import { render as rtlRender } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import todosReducer from "../features/todos/todosSlice";
+import todosReducer, { TodoSlice } from "../features/todos/todosSlice";
 import { AppStore, RootState } from "../app/store";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "../styles/theme";
@@ -68,7 +68,10 @@ function render(
           listsOrder: mockedTodosListsOrder,
           filterStatus: [],
           search: "",
-        },
+          loadTodosApiStatus: "",
+          editTodoApiStatus: "",
+          createTodoApiStatus: "",
+        } as TodoSlice,
       },
     }),
     ...renderOptions

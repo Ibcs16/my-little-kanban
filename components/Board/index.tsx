@@ -4,9 +4,7 @@ import { DragDropContext, DragStart, DropResult } from "react-beautiful-dnd";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import {
-  selectAllFilterStatus,
   selectAllTodoLists,
-  todoDragged,
   updateList,
 } from "../../features/todos/todosSlice";
 import List from "../List";

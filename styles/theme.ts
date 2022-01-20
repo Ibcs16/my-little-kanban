@@ -1,4 +1,64 @@
-import { css } from "@emotion/react";
+import { css, SerializedStyles } from "@emotion/react";
+
+interface TypograhyTheme {
+  [key: string]: {
+    [key: string]: SerializedStyles;
+  };
+}
+
+const typography: TypograhyTheme = {
+  md: {
+    headingLg: css`
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 32px;
+      line-height: 37px;
+    `,
+    headingMd: css`
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 21px;
+    `,
+    paragraphMd: css`
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 19px;
+    `,
+    paragraphMdBold: css`
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 19px;
+    `,
+    extra: css`
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 14px;
+    `,
+    extraMd: css`
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+    `,
+    input: css`
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 19px;
+    `,
+  },
+};
 
 export const theme = {
   colors: {
@@ -17,60 +77,7 @@ export const theme = {
   shadows: {
     sm: "0px 2px 4px rgba(0, 0, 0, 0.05)",
   },
-  typography: {
-    md: {
-      headingLg: css`
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 32px;
-        line-height: 37px;
-      `,
-      headingMd: css`
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 21px;
-      `,
-      paragraphMd: css`
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 19px;
-      `,
-      paragraphMdBold: css`
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 19px;
-      `,
-      extra: css`
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 14px;
-      `,
-      extraMd: css`
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 16px;
-      `,
-      input: css`
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 19px;
-      `,
-    },
-    sm: {},
-  },
+  typography,
 };
 
 export type ThemeType = typeof theme;
