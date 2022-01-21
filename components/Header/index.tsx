@@ -45,26 +45,24 @@ const Header: React.FC = () => {
   const [activePage, setActivePage] = useState("todos");
   return (
     <Container>
-      <AnimateSharedLayout>
-        {/* <div>Logo</div> */}
-        <nav>
-          {menuItems.map(({ page, icon }, index) => (
-            // <Link key={page} href={`/${page}`} passHref>
-            <HeaderItem
-              key={page}
-              name={page}
-              active={activePage === page}
-              onClick={() => setActivePage(page)}
-            />
-            // </Link>
-          ))}
-        </nav>
-        <HeaderItem
-          name={"settings"}
-          active={activePage === "settings"}
-          onClick={() => setActivePage("settings")}
-        />
-      </AnimateSharedLayout>
+      {/* <div>Logo</div> */}
+      <nav>
+        {menuItems.map(({ page, icon }, index) => (
+          // <Link key={page} href={`/${page}`} passHref>
+          <HeaderItem
+            key={page}
+            name={page}
+            active={activePage === page}
+            onClick={() => setActivePage(page)}
+          />
+          // </Link>
+        ))}
+      </nav>
+      <HeaderItem
+        name={"settings"}
+        active={activePage === "settings"}
+        onClick={() => setActivePage("settings")}
+      />
     </Container>
   );
 };
