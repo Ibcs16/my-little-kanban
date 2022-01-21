@@ -4,8 +4,8 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
-  width: 100%;
-  max-width: 276px;
+  flex: 1;
+
   height: 51px;
   background: ${({ theme }) => theme.colors.bg01};
   border: 1px solid
@@ -41,5 +41,9 @@ export const Container = styled.div<ContainerProps>`
 
   svg {
     color: ${({ theme }) => theme.colors.textTertiary};
+  }
+
+  ${({ theme }) => theme.media.md} {
+    max-width: 276px;
   }
 `;

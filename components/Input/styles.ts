@@ -7,15 +7,18 @@ export const Container = styled.div<ContainerProps>`
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
-
-  height: 51px;
+  height: 40px;
   background: ${({ theme }) => theme.colors.bg01};
   border: 1px solid
     ${({ theme, focused }) => theme.colors[focused ? "primary" : "bg02"]};
   border-radius: 4px;
-  padding: 15px 21px;
+  // padding: 10px 15px;
   display: flex;
   align-items: center;
+
+  ${props => props.theme.media.md} {
+    height: 51px;
+  }
 
   input {
     height: 100%;

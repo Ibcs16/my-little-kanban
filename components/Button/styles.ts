@@ -1,6 +1,11 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
-export const Container = styled.button`
+interface ButtonProps {
+  hideLabelOnMobile?: boolean;
+}
+
+export const Container = styled.button<ButtonProps>`
   padding: 16px 12px;
   border-radius: 4px;
   border: none;
@@ -13,10 +18,27 @@ export const Container = styled.button`
   svg {
     color: white;
   }
+
   max-height: 51px;
   cursor: pointer;
   &:hover,
   &:focus {
     opacity: 0.8;
   }
+
+  span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  ${props =>
+    props.hideLabelOnMobile &&
+    css`
+      span {
+        display: none;
+        ${props.theme.media.md} {
+          display: block;
+        }
+      }
+    `}
 `;

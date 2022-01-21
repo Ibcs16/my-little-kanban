@@ -60,6 +60,16 @@ const typography: TypograhyTheme = {
   },
 };
 
+interface MediaTheme {
+  [key: string]: string;
+}
+
+const media: MediaTheme = {
+  sm: "@media only screen and (max-width: 600px)",
+  md: "@media only screen and (min-width: 600px)",
+  lg: "@media only screen and (min-width: 992px)",
+};
+
 export const theme = {
   colors: {
     primary: "#E85A1E",
@@ -78,6 +88,7 @@ export const theme = {
     sm: "0px 2px 4px rgba(0, 0, 0, 0.05)",
   },
   typography,
+  media,
 };
 
 export type ThemeType = typeof theme;

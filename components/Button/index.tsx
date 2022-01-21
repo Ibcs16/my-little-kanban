@@ -8,13 +8,20 @@ interface ButtonProps {
   icon: string;
   onClick?: () => void;
   [key: string]: any;
+  hideLabelOnMobile?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ icon, label, onClick, ...others }) => {
+const Button: React.FC<ButtonProps> = ({
+  hideLabelOnMobile,
+  icon,
+  label,
+  onClick,
+  ...others
+}) => {
   if (!label) return null;
   return (
-    <Container onClick={onClick}>
-      {label}
+    <Container onClick={onClick} hideLabelOnMobile={hideLabelOnMobile}>
+      <span>{label}</span>
       {icon && <Icon name={icon} size={18} {...others} />}
     </Container>
   );

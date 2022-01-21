@@ -33,17 +33,63 @@ const globalStyles = (theme: Theme) => css`
 
   #__next {
     display: grid;
-    grid-template-columns: 90px auto;
-    grid-template-rows: 1fr;
-    gap-column: 20px;
-    grid-auto-flow: row;
+    gap-row: 28px;
+    grid-auto-flow: fit-content;
+    grid-template-rows: 52px auto;
+    grid-template-columns: 1fr;
 
-    grid-template-areas: "header content";
+    grid-template-areas:
+      "header"
+      "content";
+
+    ${theme.media.md} {
+      grid-template-areas: "header content";
+      grid-auto-flow: row;
+      gap-column: 20px;
+      grid-template-columns: 90px auto;
+      grid-template-rows: 1fr;
+    }
   }
 
   #content {
     grid-area: content;
-    padding: 40px 32px 24px 55px;
+    padding: 26px 0px 26px 26px;
+
+    ${theme.media.md} {
+      padding: 40px 32px 24px 55px;
+    }
+  }
+
+  .searchWrapper {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+    padding-right: 26px;
+
+    ${theme.media.md} {
+      gap: 18px;
+      width: fit-content;
+      padding-right: 32px;
+    }
+  }
+
+  .boardInfoWrapper {
+    flex: 1;
+    padding-right: 26px;
+    ${theme.media.md} {
+      padding-right: 32px;
+    }
+  }
+
+  .boardHeader {
+    display: flex;
+    gap: 28px;
+    justify-content: space-between;
+    flex-direction: column;
+    ${theme.media.md} {
+      gap: 0px;
+      flex-direction: row;
+    }
   }
 
   input {
@@ -60,7 +106,7 @@ const globalStyles = (theme: Theme) => css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: clamp(540px, 540px, 90%);
+    width: clamp(520px, 520px, 90%);
     padding: 45px 67px;
     background: white;
 
@@ -75,7 +121,7 @@ const globalStyles = (theme: Theme) => css`
   }
 
   .modal-backdrop {
-    position: absolute;
+    position: fixed;
     background: rgba(0, 0, 0, 0.8);
     top: 0;
     left: 0;

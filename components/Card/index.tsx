@@ -25,7 +25,7 @@ const Card: React.FC<CardProps> = ({ data, index }) => {
   const [newText, setNewText] = useState(data.title);
   const editInputRef = useRef<HTMLInputElement>(null);
 
-  const toggleIsEditing = () => setIsEditing();
+  const toggleIsEditing = useCallback(() => setIsEditing(), [setIsEditing]);
 
   const handleEdit = () => {
     if (!newText) {
@@ -38,6 +38,15 @@ const Card: React.FC<CardProps> = ({ data, index }) => {
       toggleIsEditing();
     }, 800);
   };
+
+  const handleOnClose = useCallback(() => {
+    if (isEditing) {
+      toggleIsEditing();
+      if (editInputRef.current) {
+        editInputRef.current.blur();
+      }
+    }
+  }, [isEditing, toggleIsEditing, editInputRef]);
 
   const handleOpenEdit = () => {
     toggleIsEditing();
@@ -75,25 +84,26 @@ const Card: React.FC<CardProps> = ({ data, index }) => {
         >
           <div className="content">
             {!isEditing && <strong>{newText || data.title}</strong>}
-            {/* {isEditing && ( */}
-            {/* <TitleEditInput
-              name={`card-${data.id}-input`}
-              onChange={onTextChange}
-              value={newText}
-              onBlur={handleEdit}
-              ref={editInputRef}
-              placeholder="Unknown"
-              // readOnly={!isEditing}
-              tabIndex={isEditing ? 0 : -1}
-              // disabled={!isEditing}
-              // show={isEditing}
-            /> */}
-            {/* )} */}
+            {isEditing && (
+              <TitleEditInput
+                name={`card-${data.id}-input`}
+                onChange={onTextChange}
+                value={newText}
+                onBlur={handleEdit}
+                ref={editInputRef}
+                placeholder="Unknown"
+                // readOnly={!isEditing}
+                tabIndex={isEditing ? 0 : -1}
+                // disabled={!isEditing}
+                // show={isEditing}
+              />
+            )}
           </div>
           <Actions
             onOpenEdit={handleOpenEdit}
             onDelete={handleDelete}
             loading={isEditing && editApiStatus === "loading"}
+            onClose={handleOnClose}
           />
         </Container>
       )}

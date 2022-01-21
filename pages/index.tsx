@@ -39,30 +39,24 @@ const Home: NextPage = () => {
       {apiStatus === "loading" && <Spinner />}
       {apiStatus === "idle" && (
         <main>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "",
-            }}
-          >
-            <div style={{ flex: 1 }}>
+          <div className="boardHeader">
+            <div className="boardInfoWrapper">
               <BoardTitle>Tasks</BoardTitle>
               <BoardDescription>
                 This is your personal kanban, to help you organize and aways be
                 aware of your activities 😉
               </BoardDescription>
             </div>
-            <div
-              style={{
-                marginRight: 24,
-                display: "flex",
-                gap: 18,
-              }}
-            >
+            <div className="searchWrapper">
               <StatusFilter />
               <SearchBox />
+              <Button
+                hideLabelOnMobile
+                label="Add task"
+                icon="plus"
+                onClick={handleOpenModal}
+              />
             </div>
-            <Button label="Add task" icon="plus" onClick={handleOpenModal} />
             <AddTaskModal
               visible={showModal}
               onClose={handleOpenModal}

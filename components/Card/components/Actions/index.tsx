@@ -4,7 +4,7 @@ import {
   motion,
   useCycle,
 } from "framer-motion";
-import React from "react";
+import React, { useCallback } from "react";
 import Icon from "../../../Icon";
 import Spinner from "../../../Spinner";
 
@@ -33,11 +33,24 @@ const itemAnimation = {
 interface ActionsProps {
   onOpenEdit: () => void;
   onDelete: () => void;
+  onClose: () => void;
   loading?: boolean;
 }
 
-const Actions: React.FC<ActionsProps> = ({ loading, onOpenEdit, onDelete }) => {
+const Actions: React.FC<ActionsProps> = ({
+  loading,
+  onOpenEdit,
+  onDelete,
+  onClose,
+}) => {
   const [showActions, toggleActions] = useCycle(false, true);
+
+  const handleCloseOptions = useCallback(() => {
+    if (showActions) {
+      onClose();
+    }
+    toggleActions();
+  }, [onClose, showActions, toggleActions]);
 
   if (loading) {
     return (
@@ -80,7 +93,7 @@ const Actions: React.FC<ActionsProps> = ({ loading, onOpenEdit, onDelete }) => {
       <button
         id="menu-button"
         data-testid="menu-btn"
-        onClick={() => toggleActions()}
+        onClick={handleCloseOptions}
       >
         <Icon size={18} name={showActions ? "close" : "moreV"} />
       </button>
