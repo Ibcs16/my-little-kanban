@@ -49,10 +49,13 @@ export const Container = styled.div<ContainerProps>`
 
   ul {
     height: 100%;
+    // max-height: 420px;
+
     margin-top: 16px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow-y: auto;
   }
 
   ${props =>

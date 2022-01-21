@@ -22,7 +22,7 @@ const Card: React.FC<CardProps> = ({ data, index }) => {
   const dispatch = useAppDispatch();
   const editApiStatus = useAppSelector(selectEditTodoApiStatus);
   const [isEditing, setIsEditing] = useCycle(false, true);
-  const [newText, setNewText] = useState(data.title);
+  const [newText, setNewText] = useState(data.title || "Unknown");
   const editInputRef = useRef<HTMLInputElement>(null);
 
   const toggleIsEditing = useCallback(() => setIsEditing(), [setIsEditing]);

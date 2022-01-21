@@ -26,7 +26,11 @@ export const Container = styled.li<ContainerProps>`
   font-weight: 500;
 
   .content {
-    width: 150px;
+    width: 100px;
+
+    ${({ theme }) => theme.media.md} {
+      width: 15s0px;
+    }
 
     strong {
       white-space: nowrap;

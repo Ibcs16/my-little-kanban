@@ -33,6 +33,8 @@ const globalStyles = (theme: Theme) => css`
 
   #__next {
     width: 100%;
+    // height: 100%;
+    overflow-x: hidden;
     display: grid;
     gap-row: 28px;
     grid-auto-flow: fit-content;
@@ -53,7 +55,7 @@ const globalStyles = (theme: Theme) => css`
   }
 
   #content {
-    width: 100%;
+    width: 100vw;
     grid-area: content;
     padding: 26px 0px 26px 26px;
 
@@ -71,7 +73,7 @@ const globalStyles = (theme: Theme) => css`
     ${theme.media.lg} {
       gap: 18px;
       width: fit-content;
-      padding-right: 32px;
+      margin-right: 42px;
     }
   }
 
@@ -118,6 +120,7 @@ const globalStyles = (theme: Theme) => css`
 
     label {
       ${theme.typography.md.headingLg}
+      text-align: center;
       margin-bottom: 20px;
     }
   }

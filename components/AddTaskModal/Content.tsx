@@ -44,7 +44,12 @@ const Content: React.FC<ContentProps> = ({ onClose, listStatus }) => {
     e.preventDefault();
 
     if (!e.target.new_task) return;
-    dispatch(addTodo({ title: e.target.new_task.value, status: listStatus }));
+    dispatch(
+      addTodo({
+        title: e.target.new_task.value || "Unknown",
+        status: listStatus,
+      }),
+    );
     setTimeout(() => {
       onClose();
     }, 400);

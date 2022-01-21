@@ -326,7 +326,7 @@ export const selectAllTodos = (state: RootState) => {
 
   if (search) {
     todos = todos.filter(todo =>
-      todo.title.toLowerCase().includes(search.toLowerCase()),
+      todo.title?.toLowerCase().includes(search.toLowerCase()),
     );
   }
   return todos
@@ -351,7 +351,7 @@ export const selectTodosByStatus = (state: RootState, status: string) => {
 
   if (search) {
     todos = todos.filter(todo =>
-      todo.title.toLowerCase().includes(search.toLowerCase()),
+      todo.title?.toLowerCase().includes(search.toLowerCase()),
     );
   }
 
@@ -369,7 +369,7 @@ export const selectTodosByIds = (state: RootState, ids: string[]) => {
 
   if (search) {
     todos = todos.filter(todo =>
-      todo.title.toLowerCase().includes(search.toLowerCase()),
+      todo.title?.toLowerCase().includes(search.toLowerCase()),
     );
   }
 
