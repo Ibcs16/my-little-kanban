@@ -7,6 +7,7 @@ export const Container = styled.div`
   padding: 30px 0px 30px;
   grid-area: board;
   overflow-x: auto;
+  overflow-y: hidden;
   gap: 18px;
 
   ${props => props.theme.media.md} {

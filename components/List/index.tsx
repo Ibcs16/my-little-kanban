@@ -78,7 +78,7 @@ const List: React.FC<TodoListProps> = ({ data }) => {
                     <Card key={todo.id} data={todo} index={cardIndex} />
                   ) : null,
                 )}
-              {provided.placeholder}
+              {/* {provided.placeholder} */}
               <AddTodoText onClick={handleOpenModal}>
                 Add task
                 <Icon size={12} name="plus" />

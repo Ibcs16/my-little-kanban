@@ -32,6 +32,7 @@ const globalStyles = (theme: Theme) => css`
   }
 
   #__next {
+    width: 100%;
     display: grid;
     gap-row: 28px;
     grid-auto-flow: fit-content;
@@ -52,10 +53,11 @@ const globalStyles = (theme: Theme) => css`
   }
 
   #content {
+    width: 100%;
     grid-area: content;
     padding: 26px 0px 26px 26px;
 
-    ${theme.media.md} {
+    ${theme.media.lg} {
       padding: 40px 32px 24px 55px;
     }
   }
@@ -66,7 +68,7 @@ const globalStyles = (theme: Theme) => css`
     width: 100%;
     padding-right: 26px;
 
-    ${theme.media.md} {
+    ${theme.media.lg} {
       gap: 18px;
       width: fit-content;
       padding-right: 32px;
@@ -76,7 +78,7 @@ const globalStyles = (theme: Theme) => css`
   .boardInfoWrapper {
     flex: 1;
     padding-right: 26px;
-    ${theme.media.md} {
+    ${theme.media.lg} {
       padding-right: 32px;
     }
   }
@@ -86,7 +88,7 @@ const globalStyles = (theme: Theme) => css`
     gap: 28px;
     justify-content: space-between;
     flex-direction: column;
-    ${theme.media.md} {
+    ${theme.media.lg} {
       gap: 0px;
       flex-direction: row;
     }
