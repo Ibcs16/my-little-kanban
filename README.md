@@ -2,7 +2,7 @@
 
 ## Live 🚀
 
-Use this app:
+Use the app:
 https://my-little-kanban.vercel.app/
 
 # Rest API
