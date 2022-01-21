@@ -14,7 +14,7 @@
 [X] - User should be able to see all added todos
 [X] - User should be able to filter todos by text
 [X] - User should be able to filter todos by status
-[] - User should be able to edit todo title inline
+[X] - User should be able to edit todo title inline
 [X] - User should be able to move todo between statuses by dragging
 
 ### Future
