@@ -24,6 +24,7 @@ export interface AddTodoRequest {
   status: string;
 }
 
+// CRUD OPERATIONS FOR TODO
 async function createTodo(newTodo: AddTodoRequest) {
   const response = await API.post<Todo>("/todos", newTodo);
   return response.data;
@@ -57,6 +58,7 @@ async function deleteTodo(id: string) {
   return response.data;
 }
 
+// CRUD OPERATIONS FOR LIST
 async function updateList(list: TodoList): Promise<UpdateListResponse> {
   const response = await API.patch<TodoList>(`/lists/${list.id}`, list);
 

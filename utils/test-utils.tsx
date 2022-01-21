@@ -72,6 +72,8 @@ export const preloadedState = {
   } as TodoSlice,
 };
 
+// we have to wrap the components in correct providers
+// so it when throw errors when testing
 function render(
   ui: React.ReactElement,
   {

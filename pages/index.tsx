@@ -14,7 +14,6 @@ import SearchBox from "../features/todos/Searchbox";
 import StatusFilter from "../components/StatusFilter";
 import {
   fetchTodos,
-  selectAllTodos,
   selectLoadTodosApiStatus,
 } from "../features/todos/todosSlice";
 

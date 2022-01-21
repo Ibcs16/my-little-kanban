@@ -5,11 +5,7 @@ import Service, {
   UpdateListRequest,
   UpdateListResponse,
 } from "../../services/todos";
-import {
-  mockedTodoLists,
-  mockedTodos,
-  mockedTodosListsOrder,
-} from "../../utils/test-utils";
+
 import { Todo, TodoList } from "./models/todo";
 
 export const todoLists = [
@@ -49,6 +45,7 @@ export interface TodoSlice {
   editTodoApiStatus: string;
 }
 
+// set initial state
 const initialState: TodoSlice = {
   items: {},
   lists: {},
@@ -81,12 +78,9 @@ export const deleteTodo = createAsyncThunk<
 });
 
 export const addTodo = createAsyncThunk<
-  // Return type of the payload creator
   Todo,
-  // First argument to the payload creator
   AddTodoRequest,
   {
-    // Optional fields for defining thunkApi field types
     dispatch: AppDispatch;
     state: RootState;
   }
@@ -96,12 +90,9 @@ export const addTodo = createAsyncThunk<
 });
 
 export const editTodo = createAsyncThunk<
-  // Return type of the payload creator
   Todo,
-  // First argument to the payload creator
   Todo,
   {
-    // Optional fields for defining thunkApi field types
     dispatch: AppDispatch;
     state: RootState;
   }
@@ -111,12 +102,9 @@ export const editTodo = createAsyncThunk<
 });
 
 export const updateList = createAsyncThunk<
-  // Return type of the payload creator
   UpdateListResponse,
-  // First argument to the payload creator
   UpdateListRequest,
   {
-    // Optional fields for defining thunkApi field types
     dispatch: AppDispatch;
     state: RootState;
   }
@@ -175,14 +163,6 @@ const todosSlice = createSlice({
   initialState,
   name: "todos",
   reducers: {
-    todoUpdated: (state, action) => {
-      const { title, status, id } = action.payload as Todo;
-      const oldTodo = selectTodoById({ todos: state }, id);
-      if (!oldTodo) return;
-      oldTodo.status = status;
-      oldTodo.title = title;
-    },
-
     searchedTerm: (state, action) => {
       state.search = action.payload;
     },
@@ -202,6 +182,7 @@ const todosSlice = createSlice({
       })
       .addCase(editTodo.pending, (state, action) => {
         state.editTodoApiStatus = "loading";
+        // change todo in store
         const { title, status, id } = action.meta.arg;
         const oldTodo = selectTodoById({ todos: state }, id);
         if (!oldTodo) return;
@@ -215,6 +196,7 @@ const todosSlice = createSlice({
         state.createTodoApiStatus = "error";
       })
       .addCase(addTodo.fulfilled, (state, action) => {
+        // update list in store with new item
         const { id, status } = action.payload;
         state.items[id] = action.payload;
         const list = Object.values(state.lists).find(
@@ -233,6 +215,7 @@ const todosSlice = createSlice({
         state.editTodoApiStatus = "loading";
       })
       .addCase(deleteTodo.fulfilled, (state, action) => {
+        // delete item from list in store
         const { id, status } = action.payload;
         delete state.items[id];
         const list = Object.values(state.lists).find(
@@ -245,11 +228,14 @@ const todosSlice = createSlice({
         state.editTodoApiStatus = "idle";
       })
       .addCase(fetchTodos.fulfilled, (state, action) => {
+        // update store with fetched data
         state.items = action.payload.items;
         state.lists = action.payload.lists;
         state.loadTodosApiStatus = "idle";
       })
       .addCase(updateList.pending, (state, action) => {
+        // move todo in store first
+        // OPTIMISTIC UI
         const {
           startListId,
           finishListId,
@@ -293,17 +279,12 @@ const todosSlice = createSlice({
         // upload lists
         state.lists[startListId] = newStartList;
         state.lists[finishListId] = newFinishList;
-      })
-      .addCase(updateList.fulfilled, (state, action) => {});
+      });
   },
 });
 
-export const {
-  searchedTerm,
-  checkedFilterStatus,
-  uncheckedFilterStatus,
-  todoUpdated,
-} = todosSlice.actions;
+export const { searchedTerm, checkedFilterStatus, uncheckedFilterStatus } =
+  todosSlice.actions;
 
 export const selectAllTodoLists = (state: RootState) => state.todos.lists;
 
