@@ -26,18 +26,22 @@ const Card: React.FC<CardProps> = ({ data, index }) => {
   const editInputRef = useRef<HTMLInputElement>(null);
 
   const toggleIsEditing = useCallback(() => setIsEditing(), [setIsEditing]);
+  const [loading, setLoading] = useState(false);
 
-  const handleEdit = () => {
-    if (!newText) {
-      setNewText(data.title);
-      return;
+  const handleEdit = useCallback(() => {
+    if (isEditing) {
+      if (!newText) {
+        setNewText(data.title);
+        return;
+      }
+      setLoading(true);
+      dispatch(editTodo({ ...data, title: newText }));
+
+      setTimeout(() => {
+        setLoading(false);
+      }, 800);
     }
-    dispatch(editTodo({ ...data, title: newText }));
-
-    setTimeout(() => {
-      toggleIsEditing();
-    }, 800);
-  };
+  }, [isEditing, dispatch, data, newText]);
 
   const handleOnClose = useCallback(() => {
     if (isEditing) {
@@ -57,10 +61,10 @@ const Card: React.FC<CardProps> = ({ data, index }) => {
 
   const handleDelete = () => {
     if (window.confirm(`Are you sure you want to delete "${data.title}"?`)) {
-      toggleIsEditing();
+      setLoading(true);
       dispatch(deleteTodo(data));
       setTimeout(() => {
-        toggleIsEditing();
+        setLoading(false);
       }, 800);
     }
   };
@@ -92,17 +96,15 @@ const Card: React.FC<CardProps> = ({ data, index }) => {
                 onBlur={handleEdit}
                 ref={editInputRef}
                 placeholder="Unknown"
-                // readOnly={!isEditing}
+                autoFocus={isEditing}
                 tabIndex={isEditing ? 0 : -1}
-                // disabled={!isEditing}
-                // show={isEditing}
               />
             )}
           </div>
           <Actions
             onOpenEdit={handleOpenEdit}
             onDelete={handleDelete}
-            loading={isEditing && editApiStatus === "loading"}
+            loading={loading}
             onClose={handleOnClose}
           />
         </Container>

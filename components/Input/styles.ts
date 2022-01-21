@@ -12,7 +12,7 @@ export const Container = styled.div<ContainerProps>`
   border: 1px solid
     ${({ theme, focused }) => theme.colors[focused ? "primary" : "bg02"]};
   border-radius: 4px;
-  // padding: 10px 15px;
+  padding: 10px 15px;
   display: flex;
   align-items: center;
 
