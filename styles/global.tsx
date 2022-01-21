@@ -56,6 +56,7 @@ const globalStyles = (theme: Theme) => css`
 
   #content {
     width: 100vw;
+
     grid-area: content;
     padding: 26px 0px 26px 26px;
 

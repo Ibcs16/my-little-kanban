@@ -49,7 +49,6 @@ export const Container = styled.div<ContainerProps>`
 
   ul {
     height: 100%;
-    // max-height: 420px;
 
     margin-top: 16px;
     display: flex;
