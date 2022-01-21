@@ -29,7 +29,7 @@ export const Container = styled.li<ContainerProps>`
     width: 100px;
 
     ${({ theme }) => theme.media.md} {
-      width: 15s0px;
+      width: 150px;
     }
 
     strong {
